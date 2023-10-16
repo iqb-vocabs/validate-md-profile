@@ -1,0 +1,30 @@
+{
+  "name": "@iqb/metadata-profiles",
+  "version": "0.1.0",
+  "author": "IQB - Institut zur Qualitätsentwicklung im Bildungswesen",
+  "license": "CC-BY-SA-4.0",
+  "description": "Data interfaces for metadata profiling",
+  "scripts": {
+    "test_response": "ts-node ./test.ts response",
+    "test_response_scheme": "ts-node ./test.ts response-scheme",
+    "generate_docs": "asyncapi generate fromTemplate json_schema/asyncapi.yaml @asyncapi/html-template -o ./public --force-write && cat json_schema/add.css >> ./public/css/global.min.css",
+    "generate_npm_publish": "tsc && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iqb-vocabs/profiles.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iqb-vocabs/profiles/issues"
+  },
+  "homepage": "https://github.com/iqb-vocabs/profiles#readme",
+  "devDependencies": {
+    "@types/node": "^20.4.4",
+    "@asyncapi/cli": "^0.51.4",
+    "@asyncapi/html-template": "^0.28.3",
+    "ajv": "^8.12.0",
+    "ts-node": "^10.9.1"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts"
+}

@@ -1,0 +1,10 @@
+image: node:bullseye-slim
+
+pages:
+  script:
+    - npm install
+    - npm run test_response
+    - npm run generate_docs
+  artifacts:
+    paths:
+      - public
