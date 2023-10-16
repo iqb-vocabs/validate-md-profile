@@ -7,8 +7,8 @@ info:
     Go to the Schema section of this document and select one schema. Expand all nodes and explore.
   version: 0.1.0
   license:
-    name: CC BY-SA 4.0
-    url: https://creativecommons.org/licenses/by-sa/4.0/
+    name: MIT
+    url: https://github.com/iqb-berlin/iqb-berlin.github.io/wiki/Softwarelizenz-f%C3%BCr-die-Anwendung-in-Deutschland
   contact:
     name: Institute for Educational Quality Improvement (IQB)
     url: https://www.iqb.hu-berlin.de

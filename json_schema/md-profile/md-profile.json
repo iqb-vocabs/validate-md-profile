@@ -126,16 +126,51 @@
         }
       }
     },
+    "number": {
+      "type": "object",
+      "properties": {
+        "digits": {
+          "type": "integer",
+          "description": "Number of digits. Negative values are not valid.",
+          "minimum": 0,
+          "default": 0
+        },
+        "minValue": {
+          "type": "number",
+          "description": "Minimal value valid for this entry."
+        },
+        "maxValue": {
+          "type": "number",
+          "description": "Maximal value valid for this entry."
+        }
+      }
+    },
+    "boolean": {
+      "type": "object",
+      "properties": {
+        "trueLabel": {
+          "$ref": "#/definitions/multi_language_text"
+        },
+        "falseLabel": {
+          "$ref": "#/definitions/multi_language_text"
+        }
+      }
+    },
     "entry": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z][0-9a-zA-Z_]*$",
+          "description": "Identifier for the property as part of the metadata profile"
+        },
         "label": {
           "$ref": "#/definitions/multi_language_text",
           "description": "Text presented in UI components as prompt"
         },
         "type": {
           "type": "string",
-          "enum": ["text", "vocabulary"]
+          "enum": ["text", "vocabulary", "boolean", "number"]
         },
         "definition": {
           "anyOf": [
@@ -144,11 +179,17 @@
             },
             {
               "$ref": "#/definitions/text"
+            },
+            {
+              "$ref": "#/definitions/number"
+            },
+            {
+              "$ref": "#/definitions/boolean"
             }
           ]
         }
       },
-      "required": ["type"]
+      "required": ["id", "type"]
     }
   }
 }

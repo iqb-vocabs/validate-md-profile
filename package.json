@@ -2,7 +2,7 @@
   "name": "@iqb/metadata-profiles",
   "version": "0.1.0",
   "author": "IQB - Institut zur Qualitätsentwicklung im Bildungswesen",
-  "license": "CC-BY-SA-4.0",
+  "license": "MIT",
   "description": "Data interfaces for metadata profiling",
   "scripts": {
     "test_profile": "ts-node ./test.ts md-profile",
@@ -18,12 +18,15 @@
     "url": "https://github.com/iqb-vocabs/profiles/issues"
   },
   "homepage": "https://github.com/iqb-vocabs/profiles#readme",
+  "dependencies": {
+    "ajv": "^8.12.0"
+  },
   "devDependencies": {
+    "@asyncapi/cli": "^0.8.1",
+    "@asyncapi/html-template": "^0.28.4",
     "@types/node": "^20.4.4",
-    "@asyncapi/cli": "^0.51.4",
-    "@asyncapi/html-template": "^0.28.3",
-    "ajv": "^8.12.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts"

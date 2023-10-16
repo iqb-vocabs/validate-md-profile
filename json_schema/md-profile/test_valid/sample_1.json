@@ -1,21 +1,21 @@
 {
-  "id": "2",
+  "id": "pf41",
   "label": [{
     "lang": "de",
-    "value": "profile entry"
+    "value": "Mathematik Primar A"
   }],
   "groups": [
     {
-      "id": "w83",
       "label": [{
         "lang": "de",
-        "value": "group 1"
+        "value": "Prozessdaten"
       }],
       "entries": [
         {
+          "id": "w83",
           "label": [{
             "lang": "de",
-            "value": "property 1"
+            "value": "Bearbeiter*in"
           }],
           "type": "text"
         }
