@@ -2,12 +2,11 @@
   "$id": "https://w3id.org/iqb/vocabs/md-profile.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Metadata Profile",
-  "description": "Data structure to describe UI components for metadata",
+  "description": "Data structure to manage UI components for metadata of objects",
   "type": "object",
   "properties": {
     "id": {
       "type": "string",
-      "pattern": "^[a-zA-Z][0-9a-zA-Z_]*$",
       "description": "Identifier for the metadata profile"
     },
     "label": {
@@ -57,6 +56,7 @@
     },
     "vocabulary": {
       "type": "object",
+      "description": "Creates values of type string (one possible id), string[] (multiple ids) or id+text tuples, if text input is allowed (see md-values).",
       "properties": {
         "url": {
           "type": "string",
@@ -98,15 +98,17 @@
           "default": []
         }
       },
-      "required": ["url_json"]
+      "required": ["url"]
     },
     "text": {
       "type": "object",
+      "description": "Creates values of type string (one possible language) or multi-language texts (see md-values).",
       "properties": {
-        "multiLine": {
-          "type": "boolean",
+        "format": {
+          "type": "string",
+          "enum": ["single", "multiline", "html"],
           "description": "If true, more then one line of text is prepared for input. Text is wrapped and vertical scrolling is possible.",
-          "default": false
+          "default": "single"
         },
         "textLanguages": {
           "type": "array",
@@ -128,6 +130,7 @@
     },
     "number": {
       "type": "object",
+      "description": "Creates values of type string with number content. The decimal separator is always dot '.'.",
       "properties": {
         "digits": {
           "type": "integer",
@@ -152,6 +155,7 @@
     },
     "boolean": {
       "type": "object",
+      "description": "Creates values of type string 'true' or 'false'.",
       "properties": {
         "trueLabel": {
           "$ref": "#/definitions/multi_language_text"

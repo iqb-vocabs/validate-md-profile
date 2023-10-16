@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "author": "IQB - Institut zur Qualitätsentwicklung im Bildungswesen",
   "license": "MIT",
-  "description": "Data interfaces for metadata profiling",
+  "description": "Data interfaces for metadata profiling and values",
   "scripts": {
     "test_profile": "ts-node ./test.ts md-profile",
-    "test_value": "ts-node ./test.ts md-value",
+    "test_value": "ts-node ./test.ts md-values",
     "generate_docs": "asyncapi generate fromTemplate json_schema/asyncapi.yaml @asyncapi/html-template -o ./public --force-write && cat json_schema/add.css >> ./public/css/global.min.css",
     "generate_npm_publish": "tsc && npm publish"
   },

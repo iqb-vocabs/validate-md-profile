@@ -28,19 +28,6 @@
           "type": "text"
         },
         {
-          "id": "w8c",
-          "label": [
-            {
-              "lang": "de",
-              "value": "Bearbeitungszeit gesamt"
-            }
-          ],
-          "type": "number",
-          "parameters": {
-            "isPeriodSeconds": true
-          }
-        },
-        {
           "id": "w4c",
           "label": [
             {
@@ -114,6 +101,19 @@
           }
         },
         {
+          "id": "w8c",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Bearbeitungszeit gesamt"
+            }
+          ],
+          "type": "number",
+          "parameters": {
+            "isPeriodSeconds": true
+          }
+        },
+        {
           "id": "g8f",
           "label": [{
             "lang": "de",
@@ -129,10 +129,16 @@
       ]
     },
     {
-      "label": [{
-        "lang": "de",
-        "value": "Kompetenzen"
-      }],
+      "label": [
+        {
+          "lang": "de",
+          "value": "Kompetenzen"
+        },
+        {
+          "lang": "en",
+          "value": "Competence description"
+        }
+      ],
       "entries": [
         {
           "id": "g53",
