@@ -1,0 +1,30 @@
+{
+  "id": "K_2",
+  "label": [
+    {
+      "lang": "de",
+      "value": "profile entry"
+    }
+  ],
+  "groups": [
+    {
+      "label": [
+        {
+          "lang": "de",
+          "value": "group 1"
+        }
+      ],
+      "entries": [
+        {
+          "label": [
+            {
+              "lang": "de",
+              "value": "property 1"
+            }
+          ],
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}

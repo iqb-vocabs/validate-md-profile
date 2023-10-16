@@ -7,25 +7,35 @@
   "properties": {
     "id": {
       "type": "string",
-      "pattern": "^[0-9a-zA-Z_]+$",
+      "pattern": "^[a-zA-Z][0-9a-zA-Z_]*$",
       "description": "Identifier for the metadata profile"
     },
     "label": {
       "$ref": "#/definitions/multi_language_text",
-      "description": "Text presented in UI components as prompt"
+      "description": "Name of the profile"
     },
-    "value": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/vocabulary"
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "$ref": "#/definitions/multi_language_text"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/entry"
+            },
+            "minItems": 1
+          }
         },
-        {
-          "$ref": "#/definitions/text"
-        }
-      ]
+        "required": ["label", "entries"]
+      },
+      "minItems": 1
     }
   },
-  "required": ["id", "label", "value"],
+  "required": ["id", "label", "groups"],
   "definitions": {
     "multi_language_text": {
       "type": "array",
@@ -115,6 +125,30 @@
           "description": "Use this regular expression to validate the input value."
         }
       }
+    },
+    "entry": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "$ref": "#/definitions/multi_language_text",
+          "description": "Text presented in UI components as prompt"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["text", "vocabulary"]
+        },
+        "definition": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/vocabulary"
+            },
+            {
+              "$ref": "#/definitions/text"
+            }
+          ]
+        }
+      },
+      "required": ["type"]
     }
   }
 }

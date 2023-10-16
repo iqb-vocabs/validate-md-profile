@@ -5,8 +5,8 @@
   "license": "CC-BY-SA-4.0",
   "description": "Data interfaces for metadata profiling",
   "scripts": {
-    "test_response": "ts-node ./test.ts response",
-    "test_response_scheme": "ts-node ./test.ts response-scheme",
+    "test_profile": "ts-node ./test.ts md-profile",
+    "test_value": "ts-node ./test.ts md-value",
     "generate_docs": "asyncapi generate fromTemplate json_schema/asyncapi.yaml @asyncapi/html-template -o ./public --force-write && cat json_schema/add.css >> ./public/css/global.min.css",
     "generate_npm_publish": "tsc && npm publish"
   },

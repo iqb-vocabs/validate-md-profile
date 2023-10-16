@@ -1,0 +1,24 @@
+{
+  "id": "iskeiIJPOJP_Odapojsapsa9sas7a____tstiuats7a87staistiausta78tasga_ksag",
+  "label": [{
+    "lang": "de",
+    "value": "profile entry"
+  }],
+  "groups": [
+    {
+      "label": [{
+        "lang": "de",
+        "value": "group 1"
+      }],
+      "entries": [
+        {
+          "label": [{
+            "lang": "de",
+            "value": "property 1"
+          }],
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
