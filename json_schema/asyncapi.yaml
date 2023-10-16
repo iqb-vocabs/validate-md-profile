@@ -1,0 +1,27 @@
+asyncapi: 2.5.0
+info:
+  title: Object specifications for metadata profiles and metadata values
+  description: |
+    The web applications of IQB use a flexible metadata system. The data structures described below help to implement components and libraries to edit, store and process these values.
+    
+    Go to the Schema section of this document and select one schema. Expand all nodes and explore.
+  version: 0.1.0
+  license:
+    name: CC BY-SA 4.0
+    url: https://creativecommons.org/licenses/by-sa/4.0/
+  contact:
+    name: Institute for Educational Quality Improvement (IQB)
+    url: https://www.iqb.hu-berlin.de
+    email: iqb-tbadev@hu-berlin.de
+channels:
+  iqb_data_structures:
+    subscribe:
+      operationId: 'Please select one schema'
+      message:
+        messageId: select_schema
+components:
+  schemas:
+    profile:
+      $ref: 'https://raw.githubusercontent.com/iqb-vocabs/profiles/master/json_schema/md-profile/md-profile.json'
+    values:
+      $ref: 'https://raw.githubusercontent.com/iqb-vocabs/profiles/master/json_schema/md-values/md-values.json'

@@ -1,0 +1,120 @@
+{
+  "$id": "https://w3id.org/iqb/vocabs/md-profile.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Metadata Profile",
+  "description": "Data structure to describe UI components for metadata",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-zA-Z_]+$",
+      "description": "Identifier for the metadata profile"
+    },
+    "label": {
+      "$ref": "#/definitions/multi_language_text",
+      "description": "Text presented in UI components as prompt"
+    },
+    "value": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/vocabulary"
+        },
+        {
+          "$ref": "#/definitions/text"
+        }
+      ]
+    }
+  },
+  "required": ["id", "label", "value"],
+  "definitions": {
+    "multi_language_text": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "lang": {
+            "type": "string",
+            "description": "ISO-language code",
+            "pattern": "^[a-z]{2}$"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": ["lang", "value"]
+      },
+      "minItems": 1
+    },
+    "vocabulary": {
+      "type": "object",
+      "properties": {
+        "url_json": {
+          "type": "string",
+          "description": "URI to the JSON representation (SkoHub) of the vocabulary definition"
+        },
+        "allowMultipleValues": {
+          "type": "boolean",
+          "description": "If true, multiple values are allowed taken from the vocabulary",
+          "default": false
+        },
+        "maxLevel": {
+          "type": "integer",
+          "description": "Maximum level taken from the hierarchical vocabulary. This is to hide lower levels. Use '0' for all levels (default).",
+          "default": 0
+        },
+        "hideNumbering": {
+          "type": "boolean",
+          "description": "If true, the numbering of vocabulary entries is not used/showed in components.",
+          "default": false
+        },
+        "hideDescription": {
+          "type": "boolean",
+          "description": "If true, the description of vocabulary entries is not used/showed in components.",
+          "default": false
+        },
+        "hideTitle": {
+          "type": "boolean",
+          "description": "If true, the title of vocabulary entries is not used/showed in components.",
+          "default": false
+        },
+        "addTextLanguages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "ISO-language code",
+            "pattern": "^[a-z]{2}$"
+          },
+          "description": "If not empty, text can be added to the selected vocabulary entry. The given entries specify the expected language(s).",
+          "default": []
+        }
+      },
+      "required": ["url_json"]
+    },
+    "text": {
+      "type": "object",
+      "properties": {
+        "multiLine": {
+          "type": "boolean",
+          "description": "If true, more then one line of text is prepared for input. Text is wrapped and vertical scrolling is possible.",
+          "default": false
+        },
+        "textLanguages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "ISO-language code",
+            "pattern": "^[a-z]{2}$"
+          },
+          "description": "Use this property to add languages, so you provide more then one text input form field.",
+          "default": [
+            "de"
+          ]
+        },
+        "pattern": {
+          "type": "string",
+          "description": "Use this regular expression to validate the input value."
+        }
+      }
+    }
+  }
+}
