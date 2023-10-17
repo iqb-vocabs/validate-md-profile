@@ -41,7 +41,8 @@
               }
             ]
           }
-        }
+        },
+        "required": ["id", "value"]
       },
       "minItems": 1
     }
