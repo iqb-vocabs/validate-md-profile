@@ -22,6 +22,6 @@ channels:
 components:
   schemas:
     profile:
-      $ref: 'https://raw.githubusercontent.com/iqb-vocabs/profiles/master/json_schema/md-profile/md-profile.json'
+      $ref: 'https://raw.githubusercontent.com/iqb-vocabs/profiles/master/json_schema/md-profile/md-profile.schema.json'
     values:
-      $ref: 'https://raw.githubusercontent.com/iqb-vocabs/profiles/master/json_schema/md-values/md-values.json'
+      $ref: 'https://raw.githubusercontent.com/iqb-vocabs/profiles/master/json_schema/md-values/md-values.schema.json'

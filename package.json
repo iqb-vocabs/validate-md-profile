@@ -1,5 +1,5 @@
 {
-  "name": "@iqb/metadata-profiles",
+  "name": "@iqb/validate-md-profile",
   "version": "0.1.0",
   "author": "IQB - Institut zur Qualitätsentwicklung im Bildungswesen",
   "license": "MIT",
@@ -7,8 +7,10 @@
   "scripts": {
     "test_profile": "ts-node ./test.ts md-profile",
     "test_value": "ts-node ./test.ts md-values",
+    "validate_profile": "ts-node src/validate-md-profile.ts json_schema/md-profile/test_valid/sample_1.json",
     "generate_docs": "asyncapi generate fromTemplate json_schema/asyncapi.yaml @asyncapi/html-template -o ./public --force-write && cat json_schema/add.css >> ./public/css/global.min.css",
-    "generate_npm_publish": "tsc && npm publish"
+    "prepare_publish": "rm -rf dist/* && tsc && cp ./json_schema/md-profile/md-profile.schema.json ./dist",
+    "npm_publish": "npm publish --access public"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts"
+  "bin": {
+    "validate-md-profile": "./dist/validate-md-profile.js"
+  }
 }

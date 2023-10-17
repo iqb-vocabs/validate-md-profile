@@ -13,5 +13,4 @@ Thumbs.db
 /public/**
 /json_schema
 test.ts
-add.css
 .gitlab-ci.yml
