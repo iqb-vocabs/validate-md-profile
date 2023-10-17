@@ -22,8 +22,8 @@
     "ajv": "^8.12.0"
   },
   "devDependencies": {
-    "@asyncapi/cli": "^0.8.1",
-    "@asyncapi/html-template": "^0.28.4",
+    "@asyncapi/cli": "^0.58.10",
+    "@asyncapi/html-template": "^1.0.0",
     "@types/node": "^20.4.4",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
