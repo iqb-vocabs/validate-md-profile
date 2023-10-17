@@ -7,7 +7,7 @@
   "scripts": {
     "test_profile": "ts-node ./test.ts md-profile",
     "test_value": "ts-node ./test.ts md-values",
-    "generate_docs": "asyncapi generate fromTemplate json_schema/asyncapi.yaml @asyncapi/html-template -o ./docs --force-write && cat json_schema/add.css >> ./docs/css/global.min.css",
+    "generate_docs": "asyncapi generate fromTemplate json_schema/asyncapi.yaml @asyncapi/html-template -o ./public --force-write && cat json_schema/add.css >> ./public/css/global.min.css",
     "generate_npm_publish": "tsc && npm publish"
   },
   "repository": {
