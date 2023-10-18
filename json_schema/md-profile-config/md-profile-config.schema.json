@@ -1,0 +1,51 @@
+{
+  "$id": "https://w3id.org/iqb/vocabs/md-profile-config.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Metadata Profile Store Config",
+  "description": "Configuration file to validate a metadata profile store",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[0-9a-zA-Z_]+$",
+      "description": "Identifier for the metadata profile store as part of the uri"
+    },
+    "creator": {
+      "type": "string",
+      "description": "Creator as person or institution"
+    },
+    "title": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "lang": {
+            "type": "string",
+            "pattern": "^[a-z]+$",
+            "description": "Language of the value"
+          },
+          "value": {
+            "type": "string",
+            "description": "Language of the value"
+          }
+        },
+        "required": ["lang", "value"]
+      },
+      "minItems": 1
+    },
+    "mdOutDir": {
+      "type": "string",
+      "description": "Folder where the markdown output is written to.",
+      "default": "./docs"
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Name of the profile json files"
+      },
+      "minItems": 1
+    }
+  },
+  "required": ["id", "title", "creator", "profiles"]
+}
