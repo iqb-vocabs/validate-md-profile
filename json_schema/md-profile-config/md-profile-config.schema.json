@@ -42,6 +42,7 @@
       "type": "array",
       "items": {
         "type": "string",
+        "minLength": 1,
         "description": "Name of the profile json files"
       },
       "minItems": 1
