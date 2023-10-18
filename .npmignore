@@ -14,3 +14,6 @@ Thumbs.db
 /json_schema
 test.ts
 .gitlab-ci.yml
+/src
+*.iml
+tsconfig.json

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import Ajv from "ajv";
 
 const fs = require('fs');

@@ -1,6 +1,6 @@
 {
   "name": "@iqb/validate-md-profile",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "IQB - Institut zur Qualitätsentwicklung im Bildungswesen",
   "license": "MIT",
   "description": "Data interfaces for metadata profiling and values",
