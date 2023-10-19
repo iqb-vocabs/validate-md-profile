@@ -8,6 +8,6 @@
   "mdOutDir": "docs",
   "creator": "IQB - Institut zur Qualitätsentwicklung im Bildungswesen",
   "profiles": [
-    "taskA"
+    "json_schema/md-profile/test_valid/sample_1.json"
   ]
 }
