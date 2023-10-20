@@ -1,6 +1,6 @@
 {
   "name": "@iqb/validate-md-profile",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "IQB - Institut zur Qualitätsentwicklung im Bildungswesen",
   "license": "MIT",
   "description": "Data interfaces for metadata profiling and values",
@@ -10,8 +10,9 @@
     "test_profile_config": "ts-node ./test.ts md-profile-config",
     "validate_profile": "ts-node src/validate-md-profile.ts json_schema/md-profile-config/test_valid/test1.json",
     "generate_docs": "asyncapi generate fromTemplate json_schema/asyncapi.yaml @asyncapi/html-template -o ./public --force-write && cat json_schema/add.css >> ./public/css/global.min.css",
-    "prepare_publish": "rm -rf dist/* && tsc && cp ./json_schema/md-profile/md-profile.schema.json ./dist && cp ./json_schema/md-profile-config/md-profile-config.schema.json ./dist",
-    "npm_publish": "npm publish --access public"
+    "prepare_publish": "rm -rf dist/* && tsc && cp ./json_schema/md-profile/md-profile.schema.json ./dist",
+    "postprepare_publish":  "cp ./json_schema/md-profile-config/md-profile-config.schema.json ./dist && cp ./package.json ./dist",
+    "npm_publish": "./dist/npm publish --access public"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,6 @@
     "typescript": "^5.2.2"
   },
   "bin": {
-    "validate-md-profile": "./dist/validate-md-profile.js"
+    "validate-md-profile": "./validate-md-profile.js"
   }
 }
