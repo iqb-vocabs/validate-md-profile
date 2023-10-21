@@ -2,13 +2,13 @@
 
 Metadata profiles for web applications of [IQB](https://www.iqb.hu-berlin.de) are stored in GitHub-repositories. We group metadata profiles in so-called "profile stores" to improve the handling. Every profile store resides in one GitHub repository. The entry point of the store is a config file `profile-config.json` in the root of the repo.
 
-Best choice is to take one of the GitHub repositories of IQB as template (naming convention: p<nn>). You learn the parameters and files and the way to use the programming of this repo `validate-md-profile`: You see a `package.json` (nodejs-universe) and two entries:
+Best choice is to take one of the GitHub repositories of IQB as template (naming convention: `p<nn>`). You learn the parameters and files and the way to use the programming of this repo `validate-md-profile`: You see a `package.json` (nodejs-universe) and two entries:
 ```json
     "scripts": {
       "validate": "validate-md-profile"
     },
     "devDependencies": {
-      "@iqb/validate-md-profile": "^0.3.0"
+      "@iqb/validate-md-profile": "^0.4.0"
     }
 ```
 Sure the version of the package will change...
