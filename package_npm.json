@@ -1,0 +1,22 @@
+{
+  "name": "@iqb/validate-md-profile",
+  "version": "0.3.1",
+  "author": "IQB - Institut zur Qualitätsentwicklung im Bildungswesen",
+  "license": "MIT",
+  "description": "Tooling to validate and generate documentation of metadata profile stores",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iqb-vocabs/validate-md-profile.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iqb-vocabs/validate-md-profile/issues"
+  },
+  "homepage": "https://github.com/iqb-vocabs/validate-md-profile#readme",
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "@iqb/metadata": "0.3.2"
+  },
+  "bin": {
+    "validate-md-profile": "./validate-md-profile.js"
+  }
+}
