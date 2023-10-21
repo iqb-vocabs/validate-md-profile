@@ -9,7 +9,7 @@
       "label": [
         {
           "lang": "de",
-          "value": "Item"
+          "value": "Itemtypisierung"
         }
       ],
       "entries": [
@@ -42,7 +42,17 @@
             "allowMultipleValues": false,
             "hideNumbering": true
           }
-        },
+        }
+      ]
+    },
+    {
+      "label": [
+        {
+          "lang": "de",
+          "value": "Kompetenzen"
+        }
+      ],
+      "entries": [
         {
           "id": "s4",
           "label": [
