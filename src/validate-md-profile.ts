@@ -11,6 +11,12 @@ if (mdConfig) {
     console.log(`config file '${configFileName}' is valid: ${mdConfig.title}`);
     mdConfig.profiles.forEach(p => {
         const myMDProfile = SchemaValidateFactory.validateProfile(p);
-        if (myMDProfile) console.log(`${myMDProfile.groups.length} groups found in '${p}'.`);
+        if (myMDProfile) {
+            let entryCount = 0;
+            myMDProfile.groups.forEach(g=> {
+                entryCount += g.entries.length;
+            });
+            console.log(`${myMDProfile.groups.length} ${myMDProfile.groups.length === 1 ? 'group' : 'groups'} and ${entryCount} ${entryCount === 1 ? 'entry' : 'entries'} found in '${p}'.`);
+        }
     })
 }
