@@ -1,4 +1,5 @@
 {
+  "id": "en1fr1",
   "title": [
     {
       "lang": "de",
@@ -8,6 +9,7 @@
   "mdOutDir": "docs",
   "creator": "IQB - Institut zur Qualitätsentwicklung im Bildungswesen",
   "profiles": [
-    "json_schema/md-profile/test_valid/sample_1.json"
+    "test-data/profile-1.json",
+    "test-data/profile-2.json"
   ]
 }

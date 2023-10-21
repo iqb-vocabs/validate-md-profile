@@ -6,26 +6,11 @@ if (process.argv[2]) {
     configFileName = `./${process.argv[2]}`;
 }
 
-const fs = require('fs');
-const configSchemaFilename = 'md-profile-config.schema.json';
-let configSchemaFullFilename = `${__dirname}/${configSchemaFilename}`;
-if (!fs.existsSync(configSchemaFullFilename)) {
-    configSchemaFullFilename = `./json_schema/md-profile-config/${configSchemaFilename}`;
-}
-
-const mdConfig = SchemaValidateFactory.validateConfig(configFileName, configSchemaFullFilename);
+const mdConfig = SchemaValidateFactory.validateConfig(configFileName);
 if (mdConfig) {
-    console.log(`config file '${configFileName}' is valid.`);
-    const profileSchemaFilename = 'md-profile.schema.json';
-    let profileSchemaFullFilename = `${__dirname}/${profileSchemaFilename}`;
-    if (!fs.existsSync(profileSchemaFullFilename)) {
-        profileSchemaFullFilename = `./json_schema/md-profile/${profileSchemaFilename}`;
-    }
+    console.log(`config file '${configFileName}' is valid: ${mdConfig.title}`);
     mdConfig.profiles.forEach(p => {
-        const myMDProfile = SchemaValidateFactory.validateProfile(p, profileSchemaFullFilename);
+        const myMDProfile = SchemaValidateFactory.validateProfile(p);
         if (myMDProfile) console.log(`${myMDProfile.groups.length} groups found in '${p}'.`);
     })
 }
-
-
-

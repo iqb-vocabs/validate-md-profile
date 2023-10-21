@@ -1,0 +1,149 @@
+{
+  "id": "https://raw.githubusercontent.com/iqb-vocabs/p11/master/item.json",
+  "label": [{
+    "lang": "de",
+    "value": "Item"
+  }],
+  "groups": [
+    {
+      "label": [
+        {
+          "lang": "de",
+          "value": "Item"
+        }
+      ],
+      "entries": [
+        {
+          "id": "s2",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Itemtyp 3er"
+            }
+          ],
+          "type": "vocabulary",
+          "parameters": {
+            "url": "xxx",
+            "allowMultipleValues": false,
+            "hideNumbering": true
+          }
+        },
+        {
+          "id": "s3",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Itemformat"
+            }
+          ],
+          "type": "vocabulary",
+          "parameters": {
+            "url": "xxxx",
+            "allowMultipleValues": false,
+            "hideNumbering": true
+          }
+        },
+        {
+          "id": "s4",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Anforderungsbereich"
+            }
+          ],
+          "type": "vocabulary",
+          "parameters": {
+            "url": "w3id.org/iqb/v10/a1/",
+            "allowMultipleValues": false,
+            "hideNumbering": true
+          }
+        },
+        {
+          "id": "s5",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Bildungsstandards prozess primär"
+            }
+          ],
+          "type": "vocabulary",
+          "parameters": {
+            "url": "w3id.org/iqb/v10/p1/",
+            "allowMultipleValues": false
+          }
+        },
+        {
+          "id": "s6",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Bildungsstandards prozess sekundär"
+            }
+          ],
+          "type": "vocabulary",
+          "parameters": {
+            "url": "w3id.org/iqb/v10/p1/",
+            "allowMultipleValues": true
+          }
+        },
+        {
+          "id": "s7",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Bildungsstandards inhalt primär"
+            }
+          ],
+          "type": "vocabulary",
+          "parameters": {
+            "url": "w3id.org/iqb/v10/i1/",
+            "allowMultipleValues": false
+          }
+        },
+        {
+          "id": "s8",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Bildungsstandards inhalt sekundär"
+            }
+          ],
+          "type": "vocabulary",
+          "parameters": {
+            "url": "w3id.org/iqb/v10/i1/",
+            "allowMultipleValues": true
+          }
+        },
+        {
+          "id": "e2",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Itemzeit"
+            }
+          ],
+          "type": "number",
+          "parameters": {
+            "minValue": 0,
+            "digits": 0,
+            "isPeriodSeconds": true
+          }
+        },
+        {
+          "id": "e4",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Schwierigkeit ex ante"
+            }
+          ],
+          "type": "vocabulary",
+          "parameters": {
+            "url": "xxxx",
+            "allowMultipleValues": false
+          }
+        }
+      ]
+    }
+  ]
+}

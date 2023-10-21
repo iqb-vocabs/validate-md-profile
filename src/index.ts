@@ -1,1 +1,1 @@
-export * from "./validate-md-profile";export * from "./md-profile-schema.classes";
+export * from "./validate-md-profile";
