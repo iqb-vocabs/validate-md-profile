@@ -1,6 +1,12 @@
 #!/usr/bin/env node
 import {SchemaValidateFactory} from "./schema-validate.factory";
-import {MDProfile} from "@iqb/metadata";
+import {
+    MDProfile,
+    MDProfileEntry,
+    ProfileEntryParametersBoolean,
+    ProfileEntryParametersNumber,
+    ProfileEntryParametersText, ProfileEntryParametersVocabulary
+} from "@iqb/metadata";
 
 const mdTargetFolder = './docs';
 const mdTargetFilename = `${mdTargetFolder}/README.md`;
@@ -8,6 +14,37 @@ const mdTargetFilename = `${mdTargetFolder}/README.md`;
 let configFileName = './profile-config.json';
 if (process.argv[2]) {
     configFileName = `./${process.argv[2]}`;
+}
+const translateProfileEntryType: { [key: string]: string } = {
+    "number": "Zahl",
+    "boolean": "Ja/Nein",
+    "vocabulary": "Vokabular",
+    "text": "Text"
+}
+const profileEntryTextFormatAsText: { [key: string]: string } = {
+    "single": "Einzeilig",
+    "multiline": "Mehrzeilig",
+    "html": "Html/formatierter Text"
+}
+
+function getProfileEntryParametersAsText( e: MDProfileEntry ): string {
+    let returnText = '';
+    if (e && e.parameters && e.type) {
+        if (e.type === 'number') {
+            const p = new ProfileEntryParametersNumber(e.parameters);
+            returnText = `Kommastellen: ${p.digits}, Mindestwert: ${p.minValue === null ? 'kein' : p.minValue}, Maximalwert: ${p.maxValue === null ? 'kein' : p.maxValue}${p.isPeriodSeconds ? ', als Sekunden' : ''}`
+        } else if (e.type === 'text') {
+            const p = new ProfileEntryParametersText(e.parameters);
+            returnText = `${profileEntryTextFormatAsText[p.format]}, Sprache(n): ${p.textLanguages.join('/')}${p.pattern ? ', Gültigkeitsmuster: ' + p.pattern : ''}`
+        } else if (e.type === 'boolean') {
+            const p = new ProfileEntryParametersBoolean(e.parameters);
+            returnText = `Text für WAHR: ${p.trueLabel}, Text für FALSCH: ${p.falseLabel}`
+        } else if (e.type === 'vocabulary') {
+            const p = new ProfileEntryParametersVocabulary(e.parameters);
+            returnText = `url: '${p.url}', ${p.allowMultipleValues ? 'Mehrfachauswahl' : 'Einmalauswahl'}${p.maxLevel > 0 ? ', Zeige nur erste ' + p.maxLevel + 'Ebene(n)': ''}${p.hideNumbering ? ', verberge Nummerierung' : ''}${p.hideTitle ? ', verberge Titel' : ''}${p.hideDescription ? ', verberge Beschreibung' : ''}${p.addTextLanguages && p.addTextLanguages.length > 0 ? ', mit Texteingabe in Sprache(n): ' + p.addTextLanguages.join('/') : ''}`
+        }
+    }
+    return returnText;
 }
 
 const mdConfig = SchemaValidateFactory.validateConfig(configFileName);
@@ -37,9 +74,12 @@ if (mdConfig) {
                 mdContent += `\`\`\`\n${p.id}\n\`\`\`\n\n`;
                 p.groups.forEach(g => {
                     if (p.groups.length > 1) mdContent += `### Gruppe "${g.label}"\n\n`;
+                    mdContent += '| Name/Label | Typ | Parameter | ID Profil-Eintrag |\n';
+                    mdContent += '| :--- | :---: | :--- | :---: |\n';
                     g.entries.forEach(e => {
-                        mdContent += `* ${e.label} (${e.id}, ${e.type})`;
-                        mdContent += '\n';
+                        mdContent += `| ${e.label} | ${translateProfileEntryType[e.type] || '?'} | `;
+                        mdContent += getProfileEntryParametersAsText(e);
+                        mdContent += ` | ${e.id} |\n`;
                     })
                 })
             })
