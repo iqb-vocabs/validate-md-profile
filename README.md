@@ -1,3 +1,6 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm](https://img.shields.io/npm/v/%40iqb%2Fvalidate-md-profile)](https://www.npmjs.com/package/@iqb/validate-md-profile)
+
 # Install
 
 Metadata profiles for web applications of [IQB](https://www.iqb.hu-berlin.de) are stored in GitHub-repositories. We group metadata profiles in so-called "profile stores" to improve the handling. Every profile store resides in one GitHub repository. The entry point of the store is a config file `profile-config.json` in the root of the repo.
