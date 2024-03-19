@@ -3,12 +3,22 @@ import {SchemaValidateFactory} from "./schema-validate.factory";
 import {MDProfile, ProfileEntryParametersVocabulary, profileEntryTypeAsText} from "@iqb/metadata";
 
 const mdTargetFolder = './docs';
-const mdTargetFilename = `${mdTargetFolder}/README.md`;
+let quartoMode = false;
 
 let configFileName = './profile-config.json';
 if (process.argv[2]) {
-    configFileName = `./${process.argv[2]}`;
+    if (process.argv[2] === '-quarto') {
+        quartoMode = true;
+    } else {
+        configFileName = `./${process.argv[2]}`;
+    }
 }
+
+if (process.argv[3] && process.argv[3] === '-quarto') {
+    quartoMode = true;
+}
+
+const mdTargetFilename = `${mdTargetFolder}/README.${quartoMode ? 'qmd' : 'md'}`;
 
 const mdConfig = SchemaValidateFactory.validateConfig(configFileName);
 if (mdConfig) {
@@ -23,20 +33,23 @@ if (mdConfig) {
             });
             console.log(`${myMDProfile.groups.length} ${myMDProfile.groups.length === 1 ? 'group' : 'groups'} and ${entryCount} ${entryCount === 1 ? 'entry' : 'entries'} found in '${p}'.`);
             allProfiles.push(myMDProfile);
+        } else {
+            console.log(`\x1b[0;33mWARNING\x1b[0m profile '${p}' not valid - ignore`);
         }
     });
     const fs = require('fs');
     if (fs.existsSync(mdTargetFolder)) {
-        let mdContent = `# ${mdConfig.title}\n`;
-        mdContent += `\`\`\`\n${mdConfig.id}\n\`\`\`\n\n`;
+        let mdContent = '';
+        mdContent += quartoMode ? `--\ntitle: ${mdConfig.title}\n--\n` : `# ${mdConfig.title}\n\n`;
+        mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
         if (mdConfig.creator) mdContent += `Autor/Organisation: ${mdConfig.creator}\n\n`;
         if (allProfiles.length > 0) {
             mdContent += `${allProfiles.length} ${allProfiles.length === 1 ? 'Profil' : 'Profile'} definiert:\n\n`;
             allProfiles.forEach(p => {
-                mdContent += `## Profil "${p.label}"\n`;
-                mdContent += `\`\`\`\n${p.id}\n\`\`\`\n\n`;
+                mdContent += quartoMode ? `# ${p.label}\n\n` : `## Profil "${p.label}"\n\n`;
+                mdContent += `ID of profile: \`${p.id}\`\n\n`;
                 p.groups.forEach(g => {
-                    if (p.groups.length > 1) mdContent += `### ${g.label}\n\n`;
+                    if (p.groups.length > 1) mdContent += quartoMode ? `## ${g.label}\n\n` : `### ${g.label}\n\n`;
                     mdContent += '| Name/Label | Typ | Parameter | ID Profil-Eintrag |\n';
                     mdContent += '| :--- | :---: | :--- | :---: |\n';
                     g.entries.forEach(e => {
@@ -50,12 +63,20 @@ if (mdConfig) {
                         mdContent += e.getParametersAsText();
                         mdContent += ` | ${e.id} |\n`;
                     })
+                    mdContent += '\n';
                 })
             })
         } else {
             mdContent += 'Keine Profile definiert.\n';
+            console.log('\x1b[0;33mWARNING\x1b[0m no profiles found');
         }
         fs.writeFileSync(mdTargetFilename, mdContent, {encoding: 'utf8'});
         console.log(`markdown file "${mdTargetFilename}" generated.`);
+    } else {
+        console.log(`\x1b[0;31mERROR\x1b[0m TargetFolder '${mdTargetFolder}' not found`);
+        process.exitCode = 1;
     }
+} else {
+    console.log(`\x1b[0;31mERROR\x1b[0m profile store '${configFileName}' not valid`);
+    process.exitCode = 1;
 }

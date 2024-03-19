@@ -5,6 +5,7 @@
   "description": "Tooling to validate and generate documentation of metadata profile stores",
   "scripts": {
     "test_validation": "ts-node src/validate-md-profile.ts test-data/profile-store-1.json",
+    "test_validation_q": "ts-node src/validate-md-profile.ts test-data/profile-store-1.json -quarto",
     "prepare_publish": "rm -rf dist/* && tsc && cp ./package_npm.json ./dist/package.json && cp ./README.md ./dist",
     "npm_publish": "cd dist && npm publish --access public"
   },
