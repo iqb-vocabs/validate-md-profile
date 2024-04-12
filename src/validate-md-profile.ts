@@ -3,7 +3,7 @@ import {SchemaValidateFactory} from "./schema-validate.factory";
 import {MDProfile, ProfileEntryParametersVocabulary, profileEntryTypeAsText} from "@iqb/metadata";
 
 const mdTargetFolder = './docs';
-let quartoMode = false;
+let quartoMode = true;
 
 let configFileName = './profile-config.json';
 if (process.argv[2]) {
@@ -40,7 +40,7 @@ if (mdConfig) {
     const fs = require('fs');
     if (fs.existsSync(mdTargetFolder)) {
         let mdContent = '';
-        mdContent += quartoMode ? `` : `# ${mdConfig.title}\n\n`;
+        mdContent += quartoMode ? `--\ntitle: ${mdConfig.title}\n--\n\n` : `# ${mdConfig.title}\n\n`;
         mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
         if (mdConfig.publisher) mdContent += `Publisher: ${mdConfig.publisher}\n\n`;
         if (mdConfig.maintainer !== "") mdContent += `Maintainer: ${mdConfig.maintainer}\n\n`;
