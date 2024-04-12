@@ -40,7 +40,7 @@ if (mdConfig) {
     const fs = require('fs');
     if (fs.existsSync(mdTargetFolder)) {
         let mdContent = '';
-        mdContent += quartoMode ? `--\ntitle: ${mdConfig.title}\n--\n\n` : `# ${mdConfig.title}\n\n`;
+        mdContent += quartoMode ? `---\ntitle: ${mdConfig.title}\n---\n\n` : `# ${mdConfig.title}\n\n`;
         mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
         if (mdConfig.publisher) mdContent += `Publisher: ${mdConfig.publisher}\n\n`;
         if (mdConfig.maintainer !== "") mdContent += `Maintainer: ${mdConfig.maintainer}\n\n`;
