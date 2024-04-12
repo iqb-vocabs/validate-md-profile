@@ -40,9 +40,10 @@ if (mdConfig) {
     const fs = require('fs');
     if (fs.existsSync(mdTargetFolder)) {
         let mdContent = '';
-        mdContent += quartoMode ? `--\ntitle: ${mdConfig.title}\n--\n` : `# ${mdConfig.title}\n\n`;
+        mdContent += quartoMode ? `` : `# ${mdConfig.title}\n\n`;
         mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
-        if (mdConfig.creator) mdContent += `Autor/Organisation: ${mdConfig.creator}\n\n`;
+        if (mdConfig.publisher) mdContent += `Publisher: ${mdConfig.publisher}\n\n`;
+        if (mdConfig.maintainer !== "") mdContent += `Maintainer: ${mdConfig.maintainer}\n\n`;
         if (allProfiles.length > 0) {
             mdContent += `${allProfiles.length} ${allProfiles.length === 1 ? 'Profil' : 'Profile'} definiert:\n\n`;
             allProfiles.forEach(p => {
@@ -63,7 +64,7 @@ if (mdConfig) {
                         mdContent += e.getParametersAsText();
                         mdContent += ` | ${e.id} |\n`;
                     })
-                    mdContent += '\n';
+                    mdContent += quartoMode ? '\n: {tbl-colwidths="[15,15,55,15]"}\n\n' : '\n';
                 })
             })
         } else {
