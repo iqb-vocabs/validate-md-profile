@@ -7,15 +7,15 @@ let quartoMode = true;
 
 let configFileName = './profile-config.json';
 if (process.argv[2]) {
-    if (process.argv[2] === '-quarto') {
-        quartoMode = true;
+    if (process.argv[2] === '-md') {
+        quartoMode = false;
     } else {
         configFileName = `./${process.argv[2]}`;
     }
 }
 
-if (process.argv[3] && process.argv[3] === '-quarto') {
-    quartoMode = true;
+if (process.argv[3] && process.argv[3] === '-md') {
+    quartoMode = false;
 }
 
 const mdTargetFilename = `${mdTargetFolder}/README.${quartoMode ? 'qmd' : 'md'}`;
@@ -40,7 +40,7 @@ if (mdConfig) {
     const fs = require('fs');
     if (fs.existsSync(mdTargetFolder)) {
         let mdContent = '';
-        mdContent += quartoMode ? `---\ntitle: ${mdConfig.title}\n---\n\n` : `# ${mdConfig.title}\n\n`;
+        mdContent += quartoMode ? `---\ntitle: ${mdConfig.title.replace(":"," -")}\n---\n\n` : `# ${mdConfig.title}\n\n`;
         mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
         if (mdConfig.publisher) mdContent += `Publisher: ${mdConfig.publisher}\n\n`;
         if (mdConfig.maintainer !== "") mdContent += `Maintainer: ${mdConfig.maintainer}\n\n`;
