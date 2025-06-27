@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import {SchemaValidateFactory} from "./schema-validate.factory";
-import {MDProfile, ProfileEntryParametersVocabulary, profileEntryTypeAsText} from "@iqb/metadata";
+// import {MDProfile, ProfileEntryParametersVocabulary, profileEntryTypeAsText} from "@iqb/metadata";
+import {MDProfileEntry, ProfileEntryParametersVocabulary, ProfileEntryParametersText} from "@iqbspecs/metadata-profile/metadata-profile.interface";
 
 const mdTargetFolder = './docs';
 let quartoMode = true;
@@ -23,19 +24,19 @@ const mdTargetFilename = `${mdTargetFolder}/README.${quartoMode ? 'qmd' : 'md'}`
 const mdConfig = SchemaValidateFactory.validateConfig(configFileName);
 if (mdConfig) {
     console.log(`config file '${configFileName}' is valid: ${mdConfig.title}`);
-    let allProfiles: MDProfile[] = [];
+    let allProfiles: MDProfileEntry[] = [];
     mdConfig.profiles.forEach(p => {
         const myMDProfile = SchemaValidateFactory.validateProfile(p);
-        if (myMDProfile) {
-            let entryCount = 0;
-            myMDProfile.groups.forEach(g=> {
-                entryCount += g.entries.length;
-            });
-            console.log(`${myMDProfile.groups.length} ${myMDProfile.groups.length === 1 ? 'group' : 'groups'} and ${entryCount} ${entryCount === 1 ? 'entry' : 'entries'} found in '${p}'.`);
-            allProfiles.push(myMDProfile);
-        } else {
-            console.log(`\x1b[0;33mWARNING\x1b[0m profile '${p}' not valid - ignore`);
-        }
+        // if (myMDProfile) {
+        //     let entryCount = 0;
+        //     myMDProfile.groups.forEach(g=> {
+        //         entryCount += g.entries.length;
+        //     });
+        //     console.log(`${myMDProfile.groups.length} ${myMDProfile.groups.length === 1 ? 'group' : 'groups'} and ${entryCount} ${entryCount === 1 ? 'entry' : 'entries'} found in '${p}'.`);
+        //     allProfiles.push(myMDProfile);
+        // } else {
+        //     console.log(`\x1b[0;33mWARNING\x1b[0m profile '${p}' not valid - ignore`);
+        // }
     });
     const fs = require('fs');
     if (fs.existsSync(mdTargetFolder)) {
@@ -57,9 +58,9 @@ if (mdConfig) {
                         mdContent += `| ${e.label} | `;
                         if (e.type === 'vocabulary' && e.parameters) {
                             const p = e.parameters as ProfileEntryParametersVocabulary;
-                            mdContent += `[${profileEntryTypeAsText[e.type]}](${p.url}) | `
+                            mdContent += `[${ProfileEntryTypeAsText[e.type]}](${p.url}) | `
                         } else {
-                            mdContent += `${profileEntryTypeAsText[e.type] || '?'} |`
+                            mdContent += `${ProfileEntryTypeAsText[e.type] || '?'} |`
                         }
                         mdContent += e.getParametersAsText();
                         mdContent += ` | ${e.id} |\n`;

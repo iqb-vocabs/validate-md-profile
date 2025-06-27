@@ -1,14 +1,25 @@
 import Ajv from "ajv";
-import {MDProfile, MDProfileStore, profileSchemaJSON, profileStoreSchemaJSON} from "@iqb/metadata";
+// import {MDProfile, MDProfileStore, profileSchemaJSON, profileStoreSchemaJSON} from "@iqb/metadata";
+// profileSchemaJSON =
+import {MDProfileEntry} from "@iqbspecs/metadata-profile/metadata-profile.interface";
+
+export interface MDProfileStore {
+    id: string,
+    publisher: string,
+    maintainer: string,
+    title: string,
+    profiles: string[]
+}
 
 export abstract class SchemaValidateFactory {
-    public static validateProfile(sourceFilename: string): MDProfile | null {
-        let mdProfile: MDProfile | null = null;
+    public static validateProfile(sourceFilename: string): MDProfileEntry | null {
+        let mdProfile: MDProfileEntry | null = null;
         const fs = require('fs');
         let compiledSchema;
         const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
         try {
-            compiledSchema = ajv.compile(profileSchemaJSON)
+           // compiledSchema = ajv.compile(profileSchemaJSON)
+            compiledSchema = ajv.getSchema("https://raw.githubusercontent.com/iqb-specifications/metadata-profile/refs/tags/0.9/metadata-profile.schema.json")
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile schema');
             console.error(err);
@@ -42,9 +53,15 @@ export abstract class SchemaValidateFactory {
                         profileData = null;
                         process.exitCode = 1;
                     }
-                    if (profileData) {
+                    if (profileData && mdProfile) {
                         try {
-                            mdProfile = new MDProfile(profileData);
+                            // mdProfile = new MDProfileEntry(profileData);
+                            mdProfile = {
+                                id: profileData.id,
+                                label: profileData.label,
+                                type: profileData.type,
+                                parameters: profileData.parameters
+                            };
                         } catch (err) {
                             console.log(`\x1b[0;31mERROR\x1b[0m parsing profile file '${sourceFilename}':`);
                             console.error(err);
@@ -85,7 +102,8 @@ export abstract class SchemaValidateFactory {
         let compiledSchema;
         const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
         try {
-            compiledSchema = ajv.compile(profileStoreSchemaJSON)
+            // compiledSchema = ajv.compile(profileStoreSchemaJSON)
+            compiledSchema = ajv.getSchema("https://raw.githubusercontent.com/nanoyan/metadata-store/refs/heads/main/metadata-store.schema.json")
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile config schema');
             console.error(err);
@@ -121,7 +139,14 @@ export abstract class SchemaValidateFactory {
                     }
                     if (profileStoreData) {
                         try {
-                            mdStore = new MDProfileStore(profileStoreData);
+                            // mdStore = new MDProfileStore(profileStoreData);
+                            mdStore = {
+                                id: profileStoreData.id,
+                                title: profileStoreData.label,
+                                publisher: profileStoreData.publisher,
+                                maintainer: profileStoreData.maintainer,
+                                profiles: profileStoreData.profiles
+                            };
                         } catch (err) {
                             console.log(`\x1b[0;31mERROR\x1b[0m instanciating profile store '${sourceFilename}':`);
                             console.error(err);
