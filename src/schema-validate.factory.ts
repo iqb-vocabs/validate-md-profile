@@ -1,7 +1,7 @@
 import Ajv from "ajv";
 // import {MDProfile, MDProfileStore, profileSchemaJSON, profileStoreSchemaJSON} from "@iqb/metadata";
 // profileSchemaJSON =
-import {MDProfileEntry} from "@iqbspecs/metadata-profile/metadata-profile.interface";
+import {LanguageCodedText, MDProfileEntry} from "@iqbspecs/metadata-profile/metadata-profile.interface";
 
 export interface MDProfileStore {
     id: string,
@@ -11,15 +11,41 @@ export interface MDProfileStore {
     profiles: string[]
 }
 
+export interface MDProfileGroup {
+    label: string,
+    entries: MDProfileEntry[];
+}
+
+export interface MDProfile {
+    id: string,
+    label: LanguageCodedText[],
+    groups: MDProfileGroup[];
+}
+
+async function loadJSONFromGitHub(url: string): Promise<any> {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch JSON: ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error loading JSON from GitHub:", error);
+        throw error;
+    }
+}
+
 export abstract class SchemaValidateFactory {
-    public static validateProfile(sourceFilename: string): MDProfileEntry | null {
-        let mdProfile: MDProfileEntry | null = null;
+    public static validateProfile(sourceFilename: string): MDProfile | null {
+        let mdProfile: MDProfile | null = null;
         const fs = require('fs');
         let compiledSchema;
         const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
         try {
            // compiledSchema = ajv.compile(profileSchemaJSON)
-            compiledSchema = ajv.getSchema("https://raw.githubusercontent.com/iqb-specifications/metadata-profile/refs/tags/0.9/metadata-profile.schema.json")
+
+            compiledSchema = ajv.compile(loadJSONFromGitHub("https://raw.githubusercontent.com/nanoyan/metadata-profile/refs/heads/main/metadata-profile.schema.json"));
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile schema');
             console.error(err);
@@ -53,14 +79,12 @@ export abstract class SchemaValidateFactory {
                         profileData = null;
                         process.exitCode = 1;
                     }
-                    if (profileData && mdProfile) {
+                    if (profileData) {
                         try {
-                            // mdProfile = new MDProfileEntry(profileData);
                             mdProfile = {
                                 id: profileData.id,
                                 label: profileData.label,
-                                type: profileData.type,
-                                parameters: profileData.parameters
+                                groups: profileData.groups
                             };
                         } catch (err) {
                             console.log(`\x1b[0;31mERROR\x1b[0m parsing profile file '${sourceFilename}':`);
@@ -103,7 +127,8 @@ export abstract class SchemaValidateFactory {
         const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
         try {
             // compiledSchema = ajv.compile(profileStoreSchemaJSON)
-            compiledSchema = ajv.getSchema("https://raw.githubusercontent.com/nanoyan/metadata-store/refs/heads/main/metadata-store.schema.json")
+            compiledSchema = ajv.compile(loadJSONFromGitHub("https://raw.githubusercontent.com/nanoyan/metadata-store/refs/heads/main/metadata-store.schema.json"));
+            console.log(compiledSchema);
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile config schema');
             console.error(err);

@@ -1,7 +1,23 @@
 #!/usr/bin/env node
 import {SchemaValidateFactory} from "./schema-validate.factory";
 // import {MDProfile, ProfileEntryParametersVocabulary, profileEntryTypeAsText} from "@iqb/metadata";
-import {MDProfileEntry, ProfileEntryParametersVocabulary, ProfileEntryParametersText} from "@iqbspecs/metadata-profile/metadata-profile.interface";
+import {
+    MDProfileEntry,
+    ProfileEntryParametersVocabulary,
+    ProfileEntryParametersText,
+    LanguageCodedText, ProfileEntryParametersBoolean, ProfileEntryParametersNumber
+} from "@iqbspecs/metadata-profile/metadata-profile.interface";
+
+export interface MDProfileGroup {
+    label: string,
+    entries: MDProfileEntry[];
+}
+
+export interface MDProfile {
+    id: string,
+    label: LanguageCodedText[],
+    groups: MDProfileGroup[];
+}
 
 const mdTargetFolder = './docs';
 let quartoMode = true;
@@ -24,19 +40,19 @@ const mdTargetFilename = `${mdTargetFolder}/README.${quartoMode ? 'qmd' : 'md'}`
 const mdConfig = SchemaValidateFactory.validateConfig(configFileName);
 if (mdConfig) {
     console.log(`config file '${configFileName}' is valid: ${mdConfig.title}`);
-    let allProfiles: MDProfileEntry[] = [];
+    let allProfiles: MDProfile[] = [];
     mdConfig.profiles.forEach(p => {
         const myMDProfile = SchemaValidateFactory.validateProfile(p);
-        // if (myMDProfile) {
-        //     let entryCount = 0;
-        //     myMDProfile.groups.forEach(g=> {
-        //         entryCount += g.entries.length;
-        //     });
-        //     console.log(`${myMDProfile.groups.length} ${myMDProfile.groups.length === 1 ? 'group' : 'groups'} and ${entryCount} ${entryCount === 1 ? 'entry' : 'entries'} found in '${p}'.`);
-        //     allProfiles.push(myMDProfile);
-        // } else {
-        //     console.log(`\x1b[0;33mWARNING\x1b[0m profile '${p}' not valid - ignore`);
-        // }
+        if (myMDProfile) {
+            let entryCount = 0;
+            myMDProfile.groups.forEach(g=> {
+                entryCount += g.entries.length;
+            });
+            console.log(`${myMDProfile.groups.length} ${myMDProfile.groups.length === 1 ? 'group' : 'groups'} and ${entryCount} ${entryCount === 1 ? 'entry' : 'entries'} found in '${p}'.`);
+            allProfiles.push(myMDProfile);
+        } else {
+            console.log(`\x1b[0;33mWARNING\x1b[0m profile '${p}' not valid - ignore`);
+        }
     });
     const fs = require('fs');
     if (fs.existsSync(mdTargetFolder)) {
@@ -58,11 +74,18 @@ if (mdConfig) {
                         mdContent += `| ${e.label} | `;
                         if (e.type === 'vocabulary' && e.parameters) {
                             const p = e.parameters as ProfileEntryParametersVocabulary;
-                            mdContent += `[${ProfileEntryTypeAsText[e.type]}](${p.url}) | `
-                        } else {
-                            mdContent += `${ProfileEntryTypeAsText[e.type] || '?'} |`
+                            const levelText = p.maxLevel > 1 ? ', Zeige nur erste ' + p.maxLevel + ' Ebenen' : ', Zeige nur erste Ebene';
+                            mdContent += `[Vokabular](${p.url}) | url: '${p.url}', ${p.allowMultipleValues ? 'Mehrfachauswahl' : 'Einmalauswahl'}${p.maxLevel > 0 ? levelText : ''}${p.hideNumbering ? ', Nummerierung unterdrückt' : ''}${p.hideTitle ? ', Titel unterdrückt' : ''}${p.hideDescription ? ', Beschreibung unterdrückt' : ''}${p.addTextLanguages && p.addTextLanguages.length > 0 ? ', mit Texteingabe in Sprache(n): ' + p.addTextLanguages.join('/') : ''}`
+                        } else if (e.type === 'text' && e.parameters) {
+                            const p = e.parameters as ProfileEntryParametersText;
+                            mdContent += `Text | ${p.format}, Sprache(n): ${p.textLanguages.join('/')}${p.pattern ? ', Gültigkeitsmuster: ' + p.pattern : ''} `
+                        } else if (e.type === 'numbers' && e.parameters) {
+                            const p = e.parameters as ProfileEntryParametersNumber;
+                            mdContent += `Zahl | Kommastellen: ${p.digits}, Mindestwert: ${p.minValue === null ? 'kein' : p.minValue}, Maximalwert: ${p.maxValue === null ? 'kein' : p.maxValue}${p.isPeriodSeconds ? ', als Sekunden' : ''}`
+                        } else if (e.type === 'boolean' && e.parameters) {
+                            const p = e.parameters as ProfileEntryParametersBoolean;
+                            mdContent += `Ja/Nein | Text für WAHR: ${p.trueLabel}, Text für FALSCH: ${p.falseLabel}`
                         }
-                        mdContent += e.getParametersAsText();
                         mdContent += ` | ${e.id} |\n`;
                     })
                     mdContent += quartoMode ? '\n: {tbl-colwidths="[15,15,55,15]"}\n\n' : '\n';
