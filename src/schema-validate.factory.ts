@@ -18,34 +18,41 @@ export interface MDProfileGroup {
 
 export interface MDProfile {
     id: string,
+    title: string,
     label: LanguageCodedText[],
     groups: MDProfileGroup[];
 }
 
-async function loadJSONFromGitHub(url: string): Promise<any> {
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch JSON: ${response.statusText}`);
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("Error loading JSON from GitHub:", error);
-        throw error;
-    }
-}
+// async function loadJSONFromGitHub(url: string): Promise<any> {
+//     try {
+//         const response = await fetch(url);
+//         if (!response.ok) {
+//             throw new Error(`Failed to fetch JSON: ${response.statusText}`);
+//         }
+//         const data = await response.json();
+//         return data;
+//     } catch (error) {
+//         console.error("Error loading JSON from GitHub:", error);
+//         throw error;
+//     }
+// }
 
 export abstract class SchemaValidateFactory {
-    public static validateProfile(sourceFilename: string): MDProfile | null {
+    public static async validateProfile(sourceFilename: string): Promise<MDProfile | null> {
         let mdProfile: MDProfile | null = null;
         const fs = require('fs');
         let compiledSchema;
         const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
+
+        const response = await fetch("https://raw.githubusercontent.com/nanoyan/metadata-profile/refs/heads/main/metadata-profile.schema.json");
+        const data: MDProfile = await response.json();
+        console.log(response.status, data.id);
+
+        //const sch = await loadJSONFromGitHub("https://raw.githubusercontent.com/nanoyan/metadata-profile/refs/heads/main/metadata-profile.schema.json");
         try {
            // compiledSchema = ajv.compile(profileSchemaJSON)
 
-            compiledSchema = ajv.compile(loadJSONFromGitHub("https://raw.githubusercontent.com/nanoyan/metadata-profile/refs/heads/main/metadata-profile.schema.json"));
+            compiledSchema = ajv.compile(data);
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile schema');
             console.error(err);
@@ -83,6 +90,7 @@ export abstract class SchemaValidateFactory {
                         try {
                             mdProfile = {
                                 id: profileData.id,
+                                title: profileData.title,
                                 label: profileData.label,
                                 groups: profileData.groups
                             };
@@ -117,18 +125,21 @@ export abstract class SchemaValidateFactory {
                 process.exitCode = 1;
             }
         }
-        return mdProfile;
+        return mdProfile ;
     }
 
-    public static validateConfig(sourceFilename: string): MDProfileStore | null {
+    public static async validateConfig(sourceFilename: string): Promise<MDProfileStore | null> {
         let mdStore: MDProfileStore | null = null;
         const fs = require('fs');
         let compiledSchema;
         const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
+
+        const response = await fetch("https://raw.githubusercontent.com/nanoyan/metadata-store/refs/heads/main/metadata-store.schema.json");
+        const data: MDProfileStore = await response.json();
+        console.log(response.status, data.title)
         try {
             // compiledSchema = ajv.compile(profileStoreSchemaJSON)
-            compiledSchema = ajv.compile(loadJSONFromGitHub("https://raw.githubusercontent.com/nanoyan/metadata-store/refs/heads/main/metadata-store.schema.json"));
-            console.log(compiledSchema);
+            compiledSchema = ajv.compile(data);
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile config schema');
             console.error(err);

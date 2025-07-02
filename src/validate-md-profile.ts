@@ -8,6 +8,14 @@ import {
     LanguageCodedText, ProfileEntryParametersBoolean, ProfileEntryParametersNumber
 } from "@iqbspecs/metadata-profile/metadata-profile.interface";
 
+export interface MDProfileStore {
+    id: string,
+    publisher: string,
+    maintainer: string,
+    title: string,
+    profiles: string[]
+}
+
 export interface MDProfileGroup {
     label: string,
     entries: MDProfileEntry[];
@@ -15,6 +23,7 @@ export interface MDProfileGroup {
 
 export interface MDProfile {
     id: string,
+    title: string,
     label: LanguageCodedText[],
     groups: MDProfileGroup[];
 }
@@ -36,30 +45,43 @@ if (process.argv[3] && process.argv[3] === '-md') {
 }
 
 const mdTargetFilename = `${mdTargetFolder}/README.${quartoMode ? 'qmd' : 'md'}`;
-
-const mdConfig = SchemaValidateFactory.validateConfig(configFileName);
-if (mdConfig) {
+console.log()
+// const mdConfig = SchemaValidateFactory.validateConfig(configFileName);
+SchemaValidateFactory.validateConfig(configFileName)
+    .then((mdConfig) => {
+    // @ts-ignore
     console.log(`config file '${configFileName}' is valid: ${mdConfig.title}`);
     let allProfiles: MDProfile[] = [];
+    // @ts-ignore
     mdConfig.profiles.forEach(p => {
-        const myMDProfile = SchemaValidateFactory.validateProfile(p);
-        if (myMDProfile) {
+       // const myMDProfile = SchemaValidateFactory.validateProfile(p);
+        SchemaValidateFactory.validateProfile(p).then(myMDProfile => {
+            // if (myMDProfile) {
             let entryCount = 0;
-            myMDProfile.groups.forEach(g=> {
+            // @ts-ignore
+            myMDProfile.groups.forEach(g => {
                 entryCount += g.entries.length;
             });
+            // @ts-ignore
             console.log(`${myMDProfile.groups.length} ${myMDProfile.groups.length === 1 ? 'group' : 'groups'} and ${entryCount} ${entryCount === 1 ? 'entry' : 'entries'} found in '${p}'.`);
+            // @ts-ignore
             allProfiles.push(myMDProfile);
-        } else {
+            // } else {
+        }).catch(error => {
             console.log(`\x1b[0;33mWARNING\x1b[0m profile '${p}' not valid - ignore`);
-        }
+        });
+            // }
     });
     const fs = require('fs');
     if (fs.existsSync(mdTargetFolder)) {
         let mdContent = '';
+        // @ts-ignore
         mdContent += quartoMode ? `---\ntitle: ${mdConfig.title.replace(":"," -")}\n---\n\n` : `# ${mdConfig.title}\n\n`;
+        // @ts-ignore
         mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
+        // @ts-ignore
         if (mdConfig.publisher) mdContent += `Publisher: ${mdConfig.publisher}\n\n`;
+        // @ts-ignore
         if (mdConfig.maintainer !== "") mdContent += `Maintainer: ${mdConfig.maintainer}\n\n`;
         if (allProfiles.length > 0) {
             mdContent += `${allProfiles.length} ${allProfiles.length === 1 ? 'Profil' : 'Profile'} definiert:\n\n`;
@@ -101,7 +123,7 @@ if (mdConfig) {
         console.log(`\x1b[0;31mERROR\x1b[0m TargetFolder '${mdTargetFolder}' not found`);
         process.exitCode = 1;
     }
-} else {
+}).catch(error => {
     console.log(`\x1b[0;31mERROR\x1b[0m profile store '${configFileName}' not valid`);
     process.exitCode = 1;
-}
+});
