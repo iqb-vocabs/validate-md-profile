@@ -7,7 +7,7 @@ export interface MDProfileStore {
     id: string,
     publisher: string,
     maintainer: string,
-    title: string,
+    title: [string,string][],
     profiles: string[]
 }
 
@@ -18,7 +18,6 @@ export interface MDProfileGroup {
 
 export interface MDProfile {
     id: string,
-    title: string,
     label: LanguageCodedText[],
     groups: MDProfileGroup[];
 }
@@ -90,7 +89,6 @@ export abstract class SchemaValidateFactory {
                         try {
                             mdProfile = {
                                 id: profileData.id,
-                                title: profileData.title,
                                 label: profileData.label,
                                 groups: profileData.groups
                             };
@@ -178,7 +176,7 @@ export abstract class SchemaValidateFactory {
                             // mdStore = new MDProfileStore(profileStoreData);
                             mdStore = {
                                 id: profileStoreData.id,
-                                title: profileStoreData.label,
+                                title: profileStoreData.title,
                                 publisher: profileStoreData.publisher,
                                 maintainer: profileStoreData.maintainer,
                                 profiles: profileStoreData.profiles
