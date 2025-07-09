@@ -1,8 +1,7 @@
 import Ajv from "ajv";
-// import {MDProfile, MDProfileStore, profileSchemaJSON, profileStoreSchemaJSON} from "@iqb/metadata";
-// profileSchemaJSON =
 import {LanguageCodedText, MDProfileEntry} from "@iqbspecs/metadata-profile/metadata-profile.interface";
 
+// replace interfaces to imports
 export interface MDProfileStore {
     id: string,
     publisher: string,
@@ -12,7 +11,7 @@ export interface MDProfileStore {
 }
 
 export interface MDProfileGroup {
-    label: string,
+    label: LanguageCodedText[],
     entries: MDProfileEntry[];
 }
 
@@ -22,20 +21,8 @@ export interface MDProfile {
     groups: MDProfileGroup[];
 }
 
-// async function loadJSONFromGitHub(url: string): Promise<any> {
-//     try {
-//         const response = await fetch(url);
-//         if (!response.ok) {
-//             throw new Error(`Failed to fetch JSON: ${response.statusText}`);
-//         }
-//         const data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.error("Error loading JSON from GitHub:", error);
-//         throw error;
-//     }
-// }
-
+const profileSchema = "https://raw.githubusercontent.com/nanoyan/metadata-profile/refs/heads/main/metadata-profile.schema.json";
+const storeSchema = "https://raw.githubusercontent.com/nanoyan/metadata-store/refs/heads/main/metadata-store.schema.json";
 export abstract class SchemaValidateFactory {
     public static async validateProfile(sourceFilename: string): Promise<MDProfile | null> {
         let mdProfile: MDProfile | null = null;
@@ -43,12 +30,11 @@ export abstract class SchemaValidateFactory {
         let compiledSchema;
         const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 
-        const response = await fetch("https://raw.githubusercontent.com/nanoyan/metadata-profile/refs/heads/main/metadata-profile.schema.json");
-        const data: MDProfile = await response.json();
-        console.log(response.status, data.id);
+        const response = await fetch(profileSchema);
+        const profile: MDProfile = await response.json();
 
         try {
-          compiledSchema = ajv.compile(data);
+          compiledSchema = ajv.compile(profile);
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile schema');
             console.error(err);
@@ -98,6 +84,7 @@ export abstract class SchemaValidateFactory {
                         if (mdProfile) {
                             let doubleIds: string[] = [];
                             let allEntryIds: string[] = [];
+                            let entryCount = 0;
                             mdProfile.groups.forEach(g => {
                                 g.entries.forEach(e => {
                                     if (allEntryIds.includes(e.id)) {
@@ -106,7 +93,9 @@ export abstract class SchemaValidateFactory {
                                         allEntryIds.push(e.id);
                                     }
                                 })
+                                entryCount += g.entries.length;
                             })
+                            console.log(`${mdProfile.groups.length} ${mdProfile.groups.length === 1 ? 'group' : 'groups'} and ${entryCount} ${entryCount === 1 ? 'entry' : 'entries'} found in '${sourceFilename}'.`);
                             if (doubleIds.length > 0) {
                                 console.log(`\x1b[0;31mERROR\x1b[0m in profile file '${sourceFilename}': double ids ${doubleIds.join(', ')}`);
                                 mdProfile = null;
@@ -129,10 +118,10 @@ export abstract class SchemaValidateFactory {
         let compiledSchema;
         const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
 
-        const response = await fetch("https://raw.githubusercontent.com/nanoyan/metadata-store/refs/heads/main/metadata-store.schema.json");
-        const data: MDProfileStore = await response.json();
+        const response = await fetch(storeSchema);
+        const store: MDProfileStore = await response.json();
         try {
-            compiledSchema = ajv.compile(data);
+            compiledSchema = ajv.compile(store);
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile config schema');
             console.error(err);
@@ -168,7 +157,6 @@ export abstract class SchemaValidateFactory {
                     }
                     if (profileStoreData) {
                         try {
-                            // mdStore = new MDProfileStore(profileStoreData);
                             mdStore = {
                                 id: profileStoreData.id,
                                 title: profileStoreData.title,
