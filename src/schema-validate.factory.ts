@@ -7,7 +7,7 @@ export interface MDProfileStore {
     id: string,
     publisher: string,
     maintainer: string,
-    title: [string,string][],
+    title: LanguageCodedText[],
     profiles: string[]
 }
 
@@ -47,11 +47,8 @@ export abstract class SchemaValidateFactory {
         const data: MDProfile = await response.json();
         console.log(response.status, data.id);
 
-        //const sch = await loadJSONFromGitHub("https://raw.githubusercontent.com/nanoyan/metadata-profile/refs/heads/main/metadata-profile.schema.json");
         try {
-           // compiledSchema = ajv.compile(profileSchemaJSON)
-
-            compiledSchema = ajv.compile(data);
+          compiledSchema = ajv.compile(data);
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile schema');
             console.error(err);
@@ -134,9 +131,7 @@ export abstract class SchemaValidateFactory {
 
         const response = await fetch("https://raw.githubusercontent.com/nanoyan/metadata-store/refs/heads/main/metadata-store.schema.json");
         const data: MDProfileStore = await response.json();
-        console.log(response.status, data.title)
         try {
-            // compiledSchema = ajv.compile(profileStoreSchemaJSON)
             compiledSchema = ajv.compile(data);
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile config schema');

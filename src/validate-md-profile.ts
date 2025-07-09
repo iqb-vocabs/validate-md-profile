@@ -9,7 +9,7 @@ import {
 } from "@iqbspecs/metadata-profile/metadata-profile.interface";
 
 export interface MDProfileGroup {
-    label: string,
+    label: LanguageCodedText[],
     entries: MDProfileEntry[];
 }
 
@@ -17,6 +17,13 @@ export interface MDProfile {
     id: string,
     label: LanguageCodedText[],
     groups: MDProfileGroup[];
+}
+
+
+export const profileEntryTextFormatAsText: { [key: string]: string } = {
+    "single": "Einzeilig",
+    "multiline": "Mehrzeilig",
+    "html": "Html/formatierter Text"
 }
 
 const mdTargetFolder = './docs';
@@ -85,7 +92,9 @@ SchemaValidateFactory.validateConfig(configFileName)
         // @ts-ignore
         await Promise.all(mdConfig.profiles
             .map(async profile => {
+                // @ts-ignore
                 allProfiles.push(<MDProfile>await SchemaValidateFactory.validateProfile(profile));
+
                 })
             );
         console.log(`La longitud es ${allProfiles.length}`);
@@ -96,7 +105,7 @@ SchemaValidateFactory.validateConfig(configFileName)
         if (fs.existsSync(mdTargetFolder)) {
                 let mdContent = '';
                 // @ts-ignore
-                mdContent += quartoMode ? `---\ntitle: ${mdConfig.title.replace(":", " -")}\n---\n\n` : `# ${mdConfig.title}\n\n`;
+                mdContent += quartoMode ? `---\ntitle: ${mdConfig.title[0].value.replace(":", " -")}\n---\n\n` : `# ${mdConfig.title[0].value}\n\n`;
                 // @ts-ignore
                 mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
                 // @ts-ignore
@@ -113,7 +122,7 @@ SchemaValidateFactory.validateConfig(configFileName)
                         mdContent += `ID of profile: \`${p.id}\`\n\n`;
                         console.log(mdContent);
                         p.groups.forEach(g => {
-                            if (p.groups.length > 1) mdContent += quartoMode ? `## ${g.label}\n\n` : `### ${g.label}\n\n`;
+                            if (p.groups.length > 1) mdContent += quartoMode ? `## ${(g.label)[0].value}\n\n` : `### ${(g.label)[0].value}\n\n`;
                             mdContent += '| Name/Label | Typ | Parameter | ID Profil-Eintrag |\n';
                             mdContent += '| :--- | :---: | :--- | :---: |\n';
                             console.log(mdContent);
@@ -129,7 +138,7 @@ SchemaValidateFactory.validateConfig(configFileName)
                                     console.log(mdContent);
                                 } else if (e.type === 'text' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersText;
-                                    mdContent += `Text | ${p.format}, Sprache(n): de ${p.pattern ? ', Gültigkeitsmuster: ' + p.pattern : ''} `
+                                    mdContent += `Text | ${profileEntryTextFormatAsText[p.format]}, Sprache(n): de ${p.pattern ? ', Gültigkeitsmuster: ' + p.pattern : ''} `
                                     console.log('paso4');
                                     console.log(mdContent);
                                 } else if (e.type === 'numbers' && e.parameters) {
