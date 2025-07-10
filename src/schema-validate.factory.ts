@@ -1,14 +1,29 @@
 import Ajv from "ajv";
-import {MDProfile, MDProfileStore, profileSchemaJSON, profileStoreSchemaJSON} from "@iqb/metadata";
+import {LanguageCodedText, MDProfile} from "@iqbspecs/metadata-profile/metadata-profile.interface";
 
+// replace interfaces to imports
+export interface MDProfileStore {
+    id: string,
+    creator: string,
+    maintainer: string,
+    title: LanguageCodedText[],
+    profiles: string[]
+}
+
+const profileSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-profile/refs/heads/main/metadata-profile.schema.json";
+const storeSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-store/refs/heads/main/metadata-store.schema.json";
 export abstract class SchemaValidateFactory {
-    public static validateProfile(sourceFilename: string): MDProfile | null {
+    public static async validateProfile(sourceFilename: string): Promise<MDProfile | null> {
         let mdProfile: MDProfile | null = null;
         const fs = require('fs');
         let compiledSchema;
         const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
+
+        const response = await fetch(profileSchema);
+        const profile: MDProfile = await response.json();
+
         try {
-            compiledSchema = ajv.compile(profileSchemaJSON)
+          compiledSchema = ajv.compile(profile);
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile schema');
             console.error(err);
@@ -44,7 +59,11 @@ export abstract class SchemaValidateFactory {
                     }
                     if (profileData) {
                         try {
-                            mdProfile = new MDProfile(profileData);
+                            mdProfile = {
+                                id: profileData.id,
+                                label: profileData.label,
+                                groups: profileData.groups
+                            };
                         } catch (err) {
                             console.log(`\x1b[0;31mERROR\x1b[0m parsing profile file '${sourceFilename}':`);
                             console.error(err);
@@ -54,6 +73,7 @@ export abstract class SchemaValidateFactory {
                         if (mdProfile) {
                             let doubleIds: string[] = [];
                             let allEntryIds: string[] = [];
+                            let entryCount = 0;
                             mdProfile.groups.forEach(g => {
                                 g.entries.forEach(e => {
                                     if (allEntryIds.includes(e.id)) {
@@ -62,7 +82,9 @@ export abstract class SchemaValidateFactory {
                                         allEntryIds.push(e.id);
                                     }
                                 })
+                                entryCount += g.entries.length;
                             })
+                            console.log(`${mdProfile.groups.length} ${mdProfile.groups.length === 1 ? 'group' : 'groups'} and ${entryCount} ${entryCount === 1 ? 'entry' : 'entries'} found in '${sourceFilename}'.`);
                             if (doubleIds.length > 0) {
                                 console.log(`\x1b[0;31mERROR\x1b[0m in profile file '${sourceFilename}': double ids ${doubleIds.join(', ')}`);
                                 mdProfile = null;
@@ -76,16 +98,19 @@ export abstract class SchemaValidateFactory {
                 process.exitCode = 1;
             }
         }
-        return mdProfile;
+        return mdProfile ;
     }
 
-    public static validateConfig(sourceFilename: string): MDProfileStore | null {
+    public static async validateConfig(sourceFilename: string): Promise<MDProfileStore | null> {
         let mdStore: MDProfileStore | null = null;
         const fs = require('fs');
         let compiledSchema;
         const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
+
+        const response = await fetch(storeSchema);
+        const store: MDProfileStore = await response.json();
         try {
-            compiledSchema = ajv.compile(profileStoreSchemaJSON)
+            compiledSchema = ajv.compile(store);
         } catch (err) {
             console.log('\x1b[0;31mERROR\x1b[0m parsing profile config schema');
             console.error(err);
@@ -121,7 +146,13 @@ export abstract class SchemaValidateFactory {
                     }
                     if (profileStoreData) {
                         try {
-                            mdStore = new MDProfileStore(profileStoreData);
+                            mdStore = {
+                                id: profileStoreData.id,
+                                title: profileStoreData.title,
+                                creator: profileStoreData.creator,
+                                maintainer: profileStoreData.maintainer,
+                                profiles: profileStoreData.profiles
+                            };
                         } catch (err) {
                             console.log(`\x1b[0;31mERROR\x1b[0m instanciating profile store '${sourceFilename}':`);
                             console.error(err);
