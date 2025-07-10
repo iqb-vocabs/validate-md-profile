@@ -2,23 +2,14 @@
 import {SchemaValidateFactory} from "./schema-validate.factory";
 
 import {
-    MDProfileEntry,
     ProfileEntryParametersVocabulary,
     ProfileEntryParametersText,
-    LanguageCodedText, ProfileEntryParametersBoolean, ProfileEntryParametersNumber
+    ProfileEntryParametersBoolean,
+    ProfileEntryParametersNumber,
+    MDProfile
 } from "@iqbspecs/metadata-profile/metadata-profile.interface";
 
-// replace interfaces to imports
-export interface MDProfileGroup {
-    label: LanguageCodedText[],
-    entries: MDProfileEntry[];
-}
 
-export interface MDProfile {
-    id: string,
-    label: LanguageCodedText[],
-    groups: MDProfileGroup[];
-}
 
 export const profileEntryTextFormatAsText: { [key: string]: string } = {
     "single": "Einzeilig",
@@ -86,7 +77,7 @@ SchemaValidateFactory.validateConfig(configFileName)
                                     mdContent += `Zahl | Kommastellen: ${p.digits}, Mindestwert: ${p.minValue === null ? 'kein' : p.minValue}, Maximalwert: ${p.maxValue === null ? 'kein' : p.maxValue}${p.isPeriodSeconds ? ', als Sekunden' : ''}`
                                 } else if (e.type === 'boolean' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersBoolean;
-                                    mdContent += `Ja/Nein | Text für WAHR: ${p.trueLabel}, Text für FALSCH: ${p.falseLabel}`
+                                    mdContent += `Ja/Nein | Text für WAHR: ${p.trueLabel[0].value}, Text für FALSCH: ${p.falseLabel[0].value}`
                                 }
                                 mdContent += ` | ${e.id} |\n`;
                             })

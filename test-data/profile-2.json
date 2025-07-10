@@ -29,18 +29,27 @@
           }
         },
         {
-          "id": "s3",
+          "id": "a3",
           "label": [
             {
               "lang": "de",
-              "value": "Itemformat"
+              "value": "Boolean Aufgabe"
             }
           ],
-          "type": "vocabulary",
+          "type": "boolean",
           "parameters": {
-            "url": "xxxx",
-            "allowMultipleValues": false,
-            "hideNumbering": true
+            "falseLabel": [
+              {
+                "lang": "de",
+                "value": "nein"
+              }
+            ],
+            "trueLabel": [
+              {
+                "lang": "de",
+                "value": "ja"
+              }
+            ]
           }
         }
       ]

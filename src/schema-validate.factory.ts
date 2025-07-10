@@ -1,5 +1,5 @@
 import Ajv from "ajv";
-import {LanguageCodedText, MDProfileEntry} from "@iqbspecs/metadata-profile/metadata-profile.interface";
+import {LanguageCodedText, MDProfile} from "@iqbspecs/metadata-profile/metadata-profile.interface";
 
 // replace interfaces to imports
 export interface MDProfileStore {
@@ -10,19 +10,8 @@ export interface MDProfileStore {
     profiles: string[]
 }
 
-export interface MDProfileGroup {
-    label: LanguageCodedText[],
-    entries: MDProfileEntry[];
-}
-
-export interface MDProfile {
-    id: string,
-    label: LanguageCodedText[],
-    groups: MDProfileGroup[];
-}
-
-const profileSchema = "https://raw.githubusercontent.com/nanoyan/metadata-profile/refs/heads/main/metadata-profile.schema.json";
-const storeSchema = "https://raw.githubusercontent.com/nanoyan/metadata-store/refs/heads/main/metadata-store.schema.json";
+const profileSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-profile/refs/heads/main/metadata-profile.schema.json";
+const storeSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-store/refs/heads/main/metadata-store.schema.json";
 export abstract class SchemaValidateFactory {
     public static async validateProfile(sourceFilename: string): Promise<MDProfile | null> {
         let mdProfile: MDProfile | null = null;
