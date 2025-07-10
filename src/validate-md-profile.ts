@@ -70,7 +70,7 @@ SchemaValidateFactory.validateConfig(configFileName)
                                 } else if (e.type === 'text' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersText;
                                     mdContent += `Text | ${profileEntryTextFormatAsText[p.format]}, Sprache(n): de ${p.pattern ? ', Gültigkeitsmuster: ' + p.pattern : ''} `
-                                } else if (e.type === 'numbers' && e.parameters) {
+                                } else if (e.type === 'number' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersNumber;
                                     mdContent += `Zahl | Kommastellen: ${p.digits}, Mindestwert: ${p.minValue === null ? 'kein' : p.minValue}, Maximalwert: ${p.maxValue === null ? 'kein' : p.maxValue}${p.isPeriodSeconds ? ', als Sekunden' : ''}`
                                 } else if (e.type === 'boolean' && e.parameters) {
