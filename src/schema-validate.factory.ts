@@ -4,7 +4,7 @@ import {LanguageCodedText, MDProfile} from "@iqbspecs/metadata-profile/metadata-
 // replace interfaces to imports
 export interface MDProfileStore {
     id: string,
-    publisher: string,
+    creator: string,
     maintainer: string,
     title: LanguageCodedText[],
     profiles: string[]
@@ -149,7 +149,7 @@ export abstract class SchemaValidateFactory {
                             mdStore = {
                                 id: profileStoreData.id,
                                 title: profileStoreData.title,
-                                publisher: profileStoreData.publisher,
+                                creator: profileStoreData.creator,
                                 maintainer: profileStoreData.maintainer,
                                 profiles: profileStoreData.profiles
                             };
