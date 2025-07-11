@@ -72,7 +72,7 @@ SchemaValidateFactory.validateConfig(configFileName)
                                     mdContent += `Text | ${profileEntryTextFormatAsText[p.format]}, Sprache(n): de ${p.pattern ? ', Gültigkeitsmuster: ' + p.pattern : ''} `
                                 } else if (e.type === 'number' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersNumber;
-                                    mdContent += `Zahl | Kommastellen: ${p.digits}, Mindestwert: ${p.minValue === null ? 'kein' : p.minValue}, Maximalwert: ${p.maxValue === null ? 'kein' : p.maxValue}${p.isPeriodSeconds ? ', als Sekunden' : ''}`
+                                    mdContent += `Zahl | Kommastellen: ${p.digits}, Mindestwert: ${p.minValue === undefined ? 'kein' : p.minValue}, Maximalwert: ${p.maxValue === undefined ? 'kein' : p.maxValue}${p.isPeriodSeconds ? ', als Sekunden' : ''}`
                                 } else if (e.type === 'boolean' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersBoolean;
                                     mdContent += `Ja/Nein | Text für WAHR: ${p.trueLabel[0].value}, Text für FALSCH: ${p.falseLabel[0].value}`
