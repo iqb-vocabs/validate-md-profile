@@ -50,7 +50,7 @@ SchemaValidateFactory.validateConfig(configFileName)
                 mdContent += quartoMode ? `---\ntitle: ${mdConfig.title[0].value.replace(":", " -")}\n---\n\n` : `# ${mdConfig.title[0].value}\n\n`;
                 mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
                 if (mdConfig.creator) mdContent += `Publisher: ${mdConfig.creator}\n\n`;
-                if (mdConfig.maintainer !== undefined ) mdContent += `Maintainer: ${mdConfig.maintainer}\n\n`;
+                if (mdConfig.maintainer !== mdConfig.creator && mdConfig.maintainer !== "") mdContent += `Maintainer: ${mdConfig.maintainer}\n\n`;
 
                 if (allProfiles.length > 0) {
                     mdContent += `${allProfiles.length} ${allProfiles.length === 1 ? 'Profil' : 'Profile'} definiert:\n\n`;
