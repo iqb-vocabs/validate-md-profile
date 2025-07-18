@@ -39,11 +39,11 @@ SchemaValidateFactory.validateConfig(configFileName)
             let allProfiles: MDProfile[] = [];
             const fs = require('fs');
 
-            await Promise.all(mdConfig.profiles
-                .map(async profile => {
-                    allProfiles.push(<MDProfile>await SchemaValidateFactory.validateProfile(profile));
-                })
-            );
+            await mdConfig.profiles.reduce(async (prevPromise, profile) => {
+                await prevPromise;
+                const validated = await SchemaValidateFactory.validateProfile(profile);
+                allProfiles.push(<MDProfile>validated);
+            }, Promise.resolve());
 
             if (fs.existsSync(mdTargetFolder)) {
                 let mdContent = '';
