@@ -1,14 +1,7 @@
 import Ajv from "ajv";
-import {LanguageCodedText, MDProfile} from "@iqbspecs/metadata-profile/metadata-profile.interface";
+import {MDProfile} from "@iqbspecs/metadata-profile/metadata-profile.interface";
+import {MDProfileStore} from "@iqbspecs/metadata-store/metadata-store.interface";
 
-// replace interfaces to imports
-export interface MDProfileStore {
-    id: string,
-    creator: string,
-    maintainer: string,
-    title: LanguageCodedText[],
-    profiles: string[]
-}
 
 const profileSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-profile/refs/heads/main/metadata-profile.schema.json";
 const storeSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-store/refs/heads/main/metadata-store.schema.json";

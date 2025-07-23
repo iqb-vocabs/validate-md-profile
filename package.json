@@ -19,6 +19,7 @@
   "homepage": "https://github.com/iqb-vocabs/validate-md-profile#readme",
   "dependencies": {
     "@iqbspecs/metadata-profile": "^0.9.1",
+    "@iqbspecs/metadata-store": "^0.3.0",
     "ajv": "^8.12.0"
   },
   "devDependencies": {
