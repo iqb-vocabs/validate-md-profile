@@ -47,7 +47,7 @@ SchemaValidateFactory.validateConfig(configFileName)
 
             if (fs.existsSync(mdTargetFolder)) {
                 let mdContent = '';
-                mdContent += quartoMode ? `---\ntitle: ${mdConfig.title[0].value.replace(":", " -")}\n---\n\n` : `# ${mdConfig.title[0].value}\n\n`;
+                mdContent += quartoMode ? `---\ntitle: ${mdConfig.title[0].value.replace(":", " -")}\nlang: de\n---\n\n` : `# ${mdConfig.title[0].value}\n\n`;
                 mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
                 if (mdConfig.creator) mdContent += `Creator: ${mdConfig.creator}\n\n`;
                 if (mdConfig.maintainer !== mdConfig.creator && mdConfig.maintainer !== undefined) mdContent += `Maintainer: ${mdConfig.maintainer}\n\n`;
