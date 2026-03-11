@@ -48,7 +48,7 @@ SchemaValidateFactory.validateConfig(configFileName)
             if (fs.existsSync(mdTargetFolder)) {
                 let mdContent = '';
                 mdContent += quartoMode ? `---\ntitle: ${mdConfig.title[0].value.replace(":", " -")}\nlang: de\n---\n\n` : `# ${mdConfig.title[0].value}\n\n`;
-                mdContent += `ID of profile-store: \`[${mdConfig.id}](${mdConfig.id})\`\n\n`;
+                mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
                 if (mdConfig.creator) mdContent += `Creator: ${mdConfig.creator}\n\n`;
                 if (mdConfig.maintainer !== mdConfig.creator && mdConfig.maintainer !== undefined) mdContent += `Maintainer: ${mdConfig.maintainer}\n\n`;
 
@@ -56,7 +56,7 @@ SchemaValidateFactory.validateConfig(configFileName)
                     mdContent += `${allProfiles.length} ${allProfiles.length === 1 ? 'Profil' : 'Profile'} definiert:\n\n`;
                     allProfiles.forEach(p => {
                         mdContent += quartoMode ? `# ${(p.label)[0].value}\n\n` : `## Profil "${(p.label)[0].value}"\n\n`;
-                        mdContent += `ID of profile: \`${p.id}\`\n\n`;
+                        mdContent += `ID of profile: [${p.id}](${p.id})\n\n`;
                         p.groups.forEach(g => {
                             if (p.groups.length > 1) mdContent += quartoMode ? `## ${(g.label)[0].value}\n\n` : `### ${(g.label)[0].value}\n\n`;
                             mdContent += '| Name/Label | Typ | Parameter | ID Profil-Eintrag |\n';
