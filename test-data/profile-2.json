@@ -1,9 +1,10 @@
 {
-  "id": "https://raw.githubusercontent.com/iqb-vocabs/p11/master/item.json",
+  "id": "https://w3id.org/iqb/p11/item/",
   "label": [{
     "lang": "de",
     "value": "Item"
   }],
+  "target": ["ITEM"],
   "groups": [
     {
       "label": [
@@ -21,7 +22,7 @@
               "value": "Itemtyp 3er"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
             "url": "xxx",
             "allowMultipleValues": false,
@@ -36,7 +37,7 @@
               "value": "Boolean Aufgabe"
             }
           ],
-          "type": "boolean",
+          "type": "BOOLEAN",
           "parameters": {
             "falseLabel": [
               {
@@ -70,7 +71,7 @@
               "value": "Anforderungsbereich"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
             "url": "w3id.org/iqb/v10/a1/",
             "allowMultipleValues": false,
@@ -86,7 +87,7 @@
               "value": "Bildungsstandards prozess primär"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
             "url": "https://w3id.org/iqb/v10/p1/",
             "allowMultipleValues": false,
@@ -101,7 +102,7 @@
               "value": "Bildungsstandards prozess sekundär"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
             "url": "w3id.org/iqb/v10/p1/",
             "allowMultipleValues": true
@@ -115,7 +116,7 @@
               "value": "Bildungsstandards inhalt primär"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
             "url": "w3id.org/iqb/v10/i1/",
             "maxLevel": 2,
@@ -130,7 +131,7 @@
               "value": "Bildungsstandards inhalt sekundär"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
             "url": "w3id.org/iqb/v10/i1/",
             "allowMultipleValues": true
@@ -144,7 +145,7 @@
               "value": "Itemzeit"
             }
           ],
-          "type": "number",
+          "type": "NUMBER",
           "parameters": {
             "minValue": 0,
             "digits": 0,
@@ -159,7 +160,7 @@
               "value": "Schwierigkeit ex ante"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
             "url": "xxxx",
             "allowMultipleValues": false

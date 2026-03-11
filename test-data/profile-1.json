@@ -1,9 +1,10 @@
 {
-  "id": "https://raw.githubusercontent.com/iqb-vocabs/p11/master/unit.json",
+  "id": "https://w3id.org/iqb/p11/unit/",
   "label": [{
     "lang": "de",
     "value": "IQB Mathematik Primar - Aufgabe"
   }],
+  "target": ["UNIT"],
   "groups": [
     {
       "label": [
@@ -21,9 +22,9 @@
               "value": "Bearbeiter*in"
             }
           ],
-          "type": "text",
+          "type": "TEXT",
           "parameters": {
-            "format": "single"
+            "format": "SINGLE"
           }
         },
         {
@@ -34,7 +35,7 @@
               "value": "Leitidee"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
             "url": "https://w3id.org/iqb/v10/i1/",
             "allowMultipleValues": false,
@@ -49,7 +50,7 @@
               "value": "Aufgaben-/Stimuluszeit"
             }
           ],
-          "type": "number",
+          "type": "NUMBER",
           "parameters": {
             "minValue": 0,
             "digits": 0,
@@ -64,9 +65,9 @@
               "value": "Quellenangaben"
             }
           ],
-          "type": "text",
+          "type": "TEXT",
           "parameters": {
-            "format": "multiline"
+            "format": "MULTILINE"
           }
         }
       ]

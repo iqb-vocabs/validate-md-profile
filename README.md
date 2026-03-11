@@ -11,7 +11,7 @@ Best choice is to take one of the GitHub repositories of IQB as template (naming
       "validate": "validate-md-profile"
     },
     "devDependencies": {
-      "@iqb/validate-md-profile": "^0.5.1"
+      "@iqb/validate-md-profile": "^0.10.1"
     }
 ```
 Sure the version of the package will change...

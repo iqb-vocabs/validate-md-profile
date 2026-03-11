@@ -5,6 +5,7 @@ import {MDProfileStore} from "@iqbspecs/metadata-store/metadata-store.interface"
 
 const profileSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-profile/refs/heads/main/metadata-profile.schema.json";
 const storeSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-store/refs/heads/main/metadata-store.schema.json";
+
 export abstract class SchemaValidateFactory {
     public static async validateProfile(sourceFilename: string): Promise<MDProfile | null> {
         let mdProfile: MDProfile | null = null;
@@ -55,6 +56,7 @@ export abstract class SchemaValidateFactory {
                             mdProfile = {
                                 id: profileData.id,
                                 label: profileData.label,
+                                target: profileData.target,
                                 groups: profileData.groups
                             };
                         } catch (err) {
