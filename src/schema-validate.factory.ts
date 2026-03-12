@@ -3,7 +3,7 @@ import {MDProfile} from "@iqbspecs/metadata-profile/metadata-profile.interface";
 import {MDProfileStore} from "@iqbspecs/metadata-store/metadata-store.interface";
 
 
-const profileSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-profile/refs/heads/main/metadata-profile.schema.json";
+const profileSchema = "https://w3id.org/iqb/spec/metadata-profile/0.9";
 const storeSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-store/refs/heads/main/metadata-store.schema.json";
 export abstract class SchemaValidateFactory {
     public static async validateProfile(sourceFilename: string): Promise<MDProfile | null> {
