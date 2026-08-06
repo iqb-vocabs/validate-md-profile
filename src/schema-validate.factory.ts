@@ -3,8 +3,8 @@ import {MDProfile} from "@iqbspecs/metadata-profile/metadata-profile.interface";
 import {MDProfileStore} from "@iqbspecs/metadata-store/metadata-store.interface";
 
 
-const profileSchema = "https://w3id.org/iqb/spec/metadata-profile/0.9";
-const storeSchema = "https://raw.githubusercontent.com/iqb-specifications/metadata-store/refs/heads/main/metadata-store.schema.json";
+const profileSchema = "https://w3id.org/iqb/spec/metadata-profile/0.11";
+const storeSchema = "https://w3id.org/iqb/spec/metadata-store/0.4";
 export abstract class SchemaValidateFactory {
     public static async validateProfile(sourceFilename: string): Promise<MDProfile | null> {
         let mdProfile: MDProfile | null = null;
@@ -55,6 +55,7 @@ export abstract class SchemaValidateFactory {
                             mdProfile = {
                                 id: profileData.id,
                                 label: profileData.label,
+                                target: profileData.target,
                                 groups: profileData.groups
                             };
                         } catch (err) {

@@ -1,9 +1,14 @@
 {
-  "id": "https://raw.githubusercontent.com/iqb-vocabs/p11/master/unit.json",
-  "label": [{
-    "lang": "de",
-    "value": "IQB Mathematik Primar - Aufgabe"
-  }],
+  "id": "https://w3id.org/iqb/p111/unit/",
+  "label": [
+    {
+      "lang": "de",
+      "value": "IQB Mathematik Primar - Aufgabe"
+    }
+  ],
+  "target": [
+    "UNIT"
+  ],
   "groups": [
     {
       "label": [
@@ -14,16 +19,70 @@
       ],
       "entries": [
         {
-          "id": "u2",
+          "id": "iqb_author",
           "label": [
             {
               "lang": "de",
-              "value": "Bearbeiter*in"
+              "value": "Entwickler:in"
             }
           ],
-          "type": "text",
+          "type": "TEXT",
           "parameters": {
-            "format": "single"
+            "format": "SINGLE"
+          }
+        },
+        {
+          "id": "f0",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Klassenstufe"
+            }
+          ],
+          "type": "VOCABULARY",
+          "parameters": {
+            "url": "http://w3id.org/openeduhub/vocabs/educationalLevel/",
+            "allowMultipleValues": true,
+            "hideNumbering": true
+          }
+        },
+        {
+          "id": "a1",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Für SPF geeignet"
+            }
+          ],
+          "type": "BOOLEAN",
+          "parameters": {
+            "trueLabel": [
+              {
+                "lang": "de",
+                "value": "ja"
+              }
+            ],
+            "falseLabel": [
+              {
+                "lang": "de",
+                "value": "nein"
+              }
+            ]
+          }
+        },
+        {
+          "id": "iqb_phones",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Kopfhörereinsatz"
+            }
+          ],
+          "type": "VOCABULARY",
+          "parameters": {
+            "url": "https://w3id.org/iqb/v24/kh/",
+            "allowMultipleValues": false,
+            "hideNumbering": true
           }
         },
         {
@@ -34,7 +93,7 @@
               "value": "Leitidee"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
             "url": "https://w3id.org/iqb/v10/i1/",
             "allowMultipleValues": false,
@@ -42,14 +101,14 @@
           }
         },
         {
-          "id": "e2",
+          "id": "iqb_time_unit",
           "label": [
             {
               "lang": "de",
-              "value": "Aufgaben-/Stimuluszeit"
+              "value": "Aufgabenzeit"
             }
           ],
-          "type": "number",
+          "type": "NUMBER",
           "parameters": {
             "minValue": 0,
             "digits": 0,
@@ -57,16 +116,44 @@
           }
         },
         {
-          "id": "e3",
+          "id": "iqb_time_stimulus",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Stimuluszeit"
+            }
+          ],
+          "type": "NUMBER",
+          "parameters": {
+            "minValue": 0,
+            "digits": 0,
+            "isPeriodSeconds": true
+          }
+        },
+        {
+          "id": "iqb_copyright",
           "label": [
             {
               "lang": "de",
               "value": "Quellenangaben"
             }
           ],
-          "type": "text",
+          "type": "TEXT",
           "parameters": {
-            "format": "multiline"
+            "format": "MULTILINE"
+          }
+        },
+        {
+          "id": "iqb_compatibility",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Unverträgliche Aufgaben"
+            }
+          ],
+          "type": "TEXT",
+          "parameters": {
+            "format": "SINGLE"
           }
         }
       ]

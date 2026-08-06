@@ -1,9 +1,9 @@
 {
-  "id": "en1fr1",
+  "id": "map",
   "title": [
     {
       "lang": "de",
-      "value": "Metadatenprofile für Testaufgaben: Fremdsprachen Sek I"
+      "value": "Metadatenprofile für Testaufgaben: Mathematik Primar"
     }
   ],
   "mdOutDir": "docs",

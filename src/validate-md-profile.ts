@@ -10,9 +10,9 @@ import {
 } from "@iqbspecs/metadata-profile/metadata-profile.interface";
 
 export const profileEntryTextFormatAsText: { [key: string]: string } = {
-    "single": "Einzeilig",
-    "multiline": "Mehrzeilig",
-    "html": "Html/formatierter Text"
+    "SINGLE": "Einzeilig",
+    "MULTILINE": "Mehrzeilig",
+    "HTML": "Html/formatierter Text"
 }
 
 const mdTargetFolder = './docs';
@@ -63,17 +63,17 @@ SchemaValidateFactory.validateConfig(configFileName)
                             mdContent += '| :--- | :---: | :--- | :---: |\n';
                             g.entries.forEach(e => {
                                 mdContent += `| ${(e.label)[0].value} | `;
-                                if (e.type === 'vocabulary' && e.parameters) {
+                                if (e.type === 'VOCABULARY' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersVocabulary;
                                     const levelText = p.maxLevel > 1 ? ', Zeige nur erste ' + p.maxLevel + ' Ebenen' : ', Zeige nur erste Ebene';
-                                    mdContent += `[Vokabular](${p.url}) | url: '${p.url}', ${p.allowMultipleValues ? 'Mehrfachauswahl' : 'Einmalauswahl'}${p.maxLevel > 0 ? levelText : ''}${p.selectionMode === undefined || p.selectionMode === 'dialog' ? ', Dialogbox': ', integrierte Darstellung'}${p.hideNumbering ? ', Nummerierung unterdrückt' : ''}${p.hideTitle ? ', Titel unterdrückt' : ''}${p.hideDescription ? ', Beschreibung unterdrückt' : ''}${p.addTextLanguages && p.addTextLanguages.length > 0 ? ', mit Texteingabe in Sprache(n): ' + p.addTextLanguages.join('/') : ''}`
-                                } else if (e.type === 'text' && e.parameters) {
+                                    mdContent += `[Vokabular](${p.url}) | url: '${p.url}', ${p.allowMultipleValues ? 'Mehrfachauswahl' : 'Einmalauswahl'}${p.maxLevel > 0 ? levelText : ''}${p.selectionMode === undefined || p.selectionMode === 'DIALOG' ? ', Dialogbox': ', integrierte Darstellung'}${p.hideNumbering ? ', Nummerierung unterdrückt' : ''}${p.hideTitle ? ', Titel unterdrückt' : ''}${p.hideDescription ? ', Beschreibung unterdrückt' : ''}${p.addTextLanguages && p.addTextLanguages.length > 0 ? ', mit Texteingabe in Sprache(n): ' + p.addTextLanguages.join('/') : ''}`
+                                } else if (e.type === 'TEXT' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersText;
                                     mdContent += `Text | ${profileEntryTextFormatAsText[p.format]}, Sprache(n): de ${p.pattern ? ', Gültigkeitsmuster: ' + p.pattern : ''} `
-                                } else if (e.type === 'number' && e.parameters) {
+                                } else if (e.type === 'NUMBER' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersNumber;
                                     mdContent += `Zahl | Kommastellen: ${p.digits}, Mindestwert: ${p.minValue === undefined ? 'kein' : p.minValue}, Maximalwert: ${p.maxValue === undefined ? 'kein' : p.maxValue}${p.isPeriodSeconds ? ', als Sekunden' : ''}`
-                                } else if (e.type === 'boolean' && e.parameters) {
+                                } else if (e.type === 'BOOLEAN' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersBoolean;
                                     mdContent += `Ja/Nein | Text für WAHR: ${p.trueLabel[0].value}, Text für FALSCH: ${p.falseLabel[0].value}`
                                 }

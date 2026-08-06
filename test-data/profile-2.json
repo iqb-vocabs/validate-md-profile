@@ -1,67 +1,38 @@
 {
-  "id": "https://raw.githubusercontent.com/iqb-vocabs/p11/master/item.json",
-  "label": [{
-    "lang": "de",
-    "value": "Item"
-  }],
+  "id": "https://w3id.org/iqb/p111/item/",
+  "label": [
+    {
+      "lang": "de",
+      "value": "IQB Mathematik Primar - Item"
+    }
+  ],
+  "target": [
+    "ITEM"
+  ],
   "groups": [
     {
       "label": [
         {
           "lang": "de",
-          "value": "Itemtypisierung"
+          "value": "Item"
         }
       ],
       "entries": [
         {
-          "id": "s2",
+          "id": "s3",
           "label": [
             {
               "lang": "de",
-              "value": "Itemtyp 3er"
+              "value": "Itemformat"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
-            "url": "xxx",
+            "url": "https://w3id.org/iqb/v27/mp/",
             "allowMultipleValues": false,
             "hideNumbering": true
           }
         },
-        {
-          "id": "a3",
-          "label": [
-            {
-              "lang": "de",
-              "value": "Boolean Aufgabe"
-            }
-          ],
-          "type": "boolean",
-          "parameters": {
-            "falseLabel": [
-              {
-                "lang": "de",
-                "value": "nein"
-              }
-            ],
-            "trueLabel": [
-              {
-                "lang": "de",
-                "value": "ja"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "label": [
-        {
-          "lang": "de",
-          "value": "Kompetenzen"
-        }
-      ],
-      "entries": [
         {
           "id": "s4",
           "label": [
@@ -70,41 +41,11 @@
               "value": "Anforderungsbereich"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
-            "url": "w3id.org/iqb/v10/a1/",
+            "url": "https://w3id.org/iqb/v10/a1/",
             "allowMultipleValues": false,
-            "hideNumbering": true,
-            "hideTitle": true
-          }
-        },
-        {
-          "id": "s5",
-          "label": [
-            {
-              "lang": "de",
-              "value": "Bildungsstandards prozess primär"
-            }
-          ],
-          "type": "vocabulary",
-          "parameters": {
-            "url": "https://w3id.org/iqb/v10/p1/",
-            "allowMultipleValues": false,
-            "hideDescription": true
-          }
-        },
-        {
-          "id": "s6",
-          "label": [
-            {
-              "lang": "de",
-              "value": "Bildungsstandards prozess sekundär"
-            }
-          ],
-          "type": "vocabulary",
-          "parameters": {
-            "url": "w3id.org/iqb/v10/p1/",
-            "allowMultipleValues": true
+            "hideNumbering": true
           }
         },
         {
@@ -112,13 +53,12 @@
           "label": [
             {
               "lang": "de",
-              "value": "Bildungsstandards inhalt primär"
+              "value": "Inhaltsbezogener Bildungsstandard primär"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
-            "url": "w3id.org/iqb/v10/i1/",
-            "maxLevel": 2,
+            "url": "https://w3id.org/iqb/v10/i1/",
             "allowMultipleValues": false
           }
         },
@@ -127,24 +67,52 @@
           "label": [
             {
               "lang": "de",
-              "value": "Bildungsstandards inhalt sekundär"
+              "value": "Inhaltsbezogener Bildungsstandard sekundär"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
-            "url": "w3id.org/iqb/v10/i1/",
+            "url": "https://w3id.org/iqb/v10/i1/",
             "allowMultipleValues": true
           }
         },
         {
-          "id": "e2",
+          "id": "s5",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Prozessbezogener Bildungsstandard primär"
+            }
+          ],
+          "type": "VOCABULARY",
+          "parameters": {
+            "url": "https://w3id.org/iqb/v10/p1/",
+            "allowMultipleValues": false
+          }
+        },
+        {
+          "id": "s6",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Prozessbezogener Bildungsstandard sekundär"
+            }
+          ],
+          "type": "VOCABULARY",
+          "parameters": {
+            "url": "https://w3id.org/iqb/v10/p1/",
+            "allowMultipleValues": true
+          }
+        },
+        {
+          "id": "iqb_time_item",
           "label": [
             {
               "lang": "de",
               "value": "Itemzeit"
             }
           ],
-          "type": "number",
+          "type": "NUMBER",
           "parameters": {
             "minValue": 0,
             "digits": 0,
@@ -156,13 +124,27 @@
           "label": [
             {
               "lang": "de",
-              "value": "Schwierigkeit ex ante"
+              "value": "Geschätzte Schwierigkeit"
             }
           ],
-          "type": "vocabulary",
+          "type": "VOCABULARY",
           "parameters": {
-            "url": "xxxx",
+            "url": "https://w3id.org/iqb/v26/ea/",
             "allowMultipleValues": false
+          }
+        },
+        {
+          "id": "iqb_itemtech",
+          "label": [
+            {
+              "lang": "de",
+              "value": "Technische Besonderheiten der Antwortoptionen"
+            }
+          ],
+          "type": "VOCABULARY",
+          "parameters": {
+            "url": "https://w3id.org/iqb/v27/ti/",
+            "allowMultipleValues": true
           }
         }
       ]
