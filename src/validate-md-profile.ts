@@ -48,7 +48,7 @@ SchemaValidateFactory.validateConfig(configFileName)
             if (fs.existsSync(mdTargetFolder)) {
                 let mdContent = '';
                 mdContent += quartoMode ? `---\ntitle: ${mdConfig.title[0].value.replace(":", " -")}\nlang: de\n---\n\n` : `# ${mdConfig.title[0].value}\n\n`;
-                mdContent += `ID of profile-store: \`[${mdConfig.id}](${mdConfig.id})\`\n\n`;
+                mdContent += `ID of profile-store: \`${mdConfig.id}\`\n\n`;
                 if (mdConfig.creator) mdContent += `Creator: ${mdConfig.creator}\n\n`;
                 if (mdConfig.maintainer !== mdConfig.creator && mdConfig.maintainer !== undefined) mdContent += `Maintainer: ${mdConfig.maintainer}\n\n`;
 
@@ -66,7 +66,7 @@ SchemaValidateFactory.validateConfig(configFileName)
                                 if (e.type === 'VOCABULARY' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersVocabulary;
                                     const levelText = p.maxLevel > 1 ? ', Zeige nur erste ' + p.maxLevel + ' Ebenen' : ', Zeige nur erste Ebene';
-                                    mdContent += `[Vokabular](${p.url}) | url: '${p.url}', ${p.allowMultipleValues ? 'Mehrfachauswahl' : 'Einmalauswahl'}${p.maxLevel > 0 ? levelText : ''}${p.selectionMode === undefined || p.selectionMode === 'DIALOG' ? ', Dialogbox': ', integrierte Darstellung'}${p.hideNumbering ? ', Nummerierung unterdrückt' : ''}${p.hideTitle ? ', Titel unterdrückt' : ''}${p.hideDescription ? ', Beschreibung unterdrückt' : ''}${p.addTextLanguages && p.addTextLanguages.length > 0 ? ', mit Texteingabe in Sprache(n): ' + p.addTextLanguages.join('/') : ''}`
+                                    mdContent += `[Vokabular](${p.url}) | url: '[${p.url}](${p.url})', ${p.allowMultipleValues ? 'Mehrfachauswahl' : 'Einmalauswahl'}${p.maxLevel > 0 ? levelText : ''}${p.selectionMode === undefined || p.selectionMode === 'DIALOG' ? ', Dialogbox': ', integrierte Darstellung'}${p.hideNumbering ? ', Nummerierung unterdrückt' : ''}${p.hideTitle ? ', Titel unterdrückt' : ''}${p.hideDescription ? ', Beschreibung unterdrückt' : ''}${p.addTextLanguages && p.addTextLanguages.length > 0 ? ', mit Texteingabe in Sprache(n): ' + p.addTextLanguages.join('/') : ''}`
                                 } else if (e.type === 'TEXT' && e.parameters) {
                                     const p = e.parameters as ProfileEntryParametersText;
                                     mdContent += `Text | ${profileEntryTextFormatAsText[p.format]}, Sprache(n): de ${p.pattern ? ', Gültigkeitsmuster: ' + p.pattern : ''} `
